@@ -233,15 +233,15 @@ function Index() {
           <h2 className="mt-4 text-3xl font-bold md:text-5xl">What Clients Say</h2>
         </div>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {testimonials.map((t) => (
-            <div key={t.a} className="card-surface">
+          {testimonials.map((t, i) => (
+            <Reveal key={t.a} delay={i * 120} className="card-surface">
               <Quote size={28} className="text-primary opacity-40" />
               <p className="mt-4 text-foreground">"{t.q}"</p>
               <div className="mt-6 border-t border-border pt-4">
                 <div className="font-semibold">{t.a}</div>
                 <div className="text-xs text-muted-foreground">{t.r}</div>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
