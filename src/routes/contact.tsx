@@ -50,7 +50,7 @@ function ContactPage() {
 
     const whatsappMessage = `New Contact Form Submission\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nService: ${service}\nMessage: ${message}`;
     const encodedMessage = encodeURIComponent(whatsappMessage);
-    window.open(`https://wa.me/919876543210?text=${encodedMessage}`, "_blank");
+    window.open(`https://wa.me/918328210998?text=${encodedMessage}`, "_blank");
     setSent(true);
   };
 
@@ -72,8 +72,8 @@ function ContactPage() {
       <section className="container-x grid gap-10 pb-24 lg:grid-cols-5">
         <div className="space-y-4 lg:col-span-2">
           {[
-            { icon: Mail, t: "Email", d: "info@Svms Technologies.io" },
-            { icon: Phone, t: "Phone", d: "+91 98765 43210" },
+            { icon: Mail, t: "Email", d: "svmstechnologies@gmail.com" },
+            { icon: Phone, t: "Phone", d: "+91 8328210998" },
             { icon: MapPin, t: "Location", d: "Hyderabad, India" },
           ].map((c) => (
             <div key={c.t} className="card-surface flex items-center gap-4">

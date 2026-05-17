@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Database, Code2, Cpu, Check, ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
-
+import { motion } from "framer-motion";
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
@@ -24,7 +24,7 @@ export const Route = createFileRoute("/services")({
 const services = [
   {
     icon: Database,
-    title: "AI Data Annotation & Labeling",
+    title: "AI Data & Language Services",
     desc: "Accurate and scalable annotation solutions for AI and Machine Learning projects.",
     highlight: "High-quality datasets for training intelligent AI models.",
     items: [
@@ -38,6 +38,8 @@ const services = [
       "NLP Data Tagging",
       "Audio Transcription",
       "Validation & QA",
+      "Transcription",
+      "Translation"
     ],
   },
   {
@@ -73,24 +75,90 @@ const services = [
     ],
   },
 ];
+const slides = [
+  {
+    title: "AI & Data Solutions",
+    desc: "Training-grade datasets and AI-powered automation services.",
+    image:
+      "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1600&auto=format&fit=crop",
+  },
+  {
+    title: "Modern Software Development",
+    desc: "Scalable web, mobile, and enterprise software solutions.",
+    image:
+      "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600&auto=format&fit=crop",
+  },
+  {
+    title: "Cloud & DevOps",
+    desc: "Secure cloud infrastructure and high-performance deployment pipelines.",
+    image:
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1600&auto=format&fit=crop",
+  },
+];
 
 function ServicesPage() {
   return (
     <div>
-      <section className="relative overflow-hidden">
-        <div className="hero-glow absolute inset-0 -z-10" />
-        <div className="container-x py-20 lg:py-28">
-          <span className="eyebrow">Our Services</span>
-          <h1 className="mt-4 max-w-3xl text-4xl font-bold md:text-6xl">
-            End-to-end <span className="brand-text">technology services</span> for every stage of
-            growth.
-          </h1>
-          <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
-            From training-grade datasets to production-ready software, our team ships the work that
-            powers modern businesses.
-          </p>
-        </div>
-      </section>
+     <section className="relative overflow-hidden">
+  {/* Background Carousel */}
+  <div className="absolute inset-0 -z-20">
+    <div className="carousel h-full w-full">
+      {slides.map((slide, index) => (
+        <div
+          key={index}
+          className="carousel-item absolute inset-0 animate-carousel"
+          style={{
+            animationDelay: `${index * 5}s`,
+            backgroundImage: `url(${slide.image})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+      ))}
+    </div>
+
+    {/* Overlay */}
+    <div className="absolute inset-0 bg-black/70" />
+  </div>
+
+  {/* Glow */}
+  <div className="hero-glow absolute inset-0 -z-10" />
+
+  {/* Content */}
+  <div className="container-x py-20 lg:py-28 relative z-10 text-white">
+    <motion.span
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className="eyebrow"
+    >
+      Our Services
+    </motion.span>
+
+    <motion.h1
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      className="mt-4 max-w-3xl text-4xl font-bold md:text-6xl leading-tight"
+    >
+      End-to-end{" "}
+      <span className="brand-text animate-pulse">
+        technology services
+      </span>{" "}
+      for every stage of growth.
+    </motion.h1>
+
+    <motion.p
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1 }}
+      className="mt-6 max-w-2xl text-lg text-gray-200"
+    >
+      From training-grade datasets to production-ready software, our team ships
+      the work that powers modern businesses.
+    </motion.p>
+  </div>
+</section>
 
       <section className="container-x space-y-10 pb-24">
         {services.map((s, idx) => (

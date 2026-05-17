@@ -125,7 +125,10 @@ function Index() {
         <div className="container-x grid items-center gap-12 py-20 lg:grid-cols-2 lg:py-28">
           <div>
             <span className="eyebrow">
-              <Sparkles size={12} /> Hello! Welcome to Svms Technologies
+             <Sparkles
+  size={12}
+  className="animate-bounce text-primary"
+/>Hello! Welcome to Svms Technologies
             </span>
             <h1 className="mt-5 text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl">
               Empowering Businesses with{" "}
@@ -399,24 +402,6 @@ function Index() {
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="container-x py-24">
-        <div className="mx-auto max-w-2xl text-center">
-          <span className="eyebrow">Testimonials</span>
-          <h2 className="mt-4 text-3xl font-bold md:text-5xl">What Clients Say</h2>
-        </div>
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {testimonials.map((t, i) => (
-            <Reveal key={t.a} delay={i * 120} className="card-surface">
-              <Quote size={28} className="text-primary opacity-40" />
-              <p className="mt-4 text-foreground">"{t.q}"</p>
-              <div className="mt-6 border-t border-border pt-4">
-                <div className="font-semibold">{t.a}</div>
-                <div className="text-xs text-muted-foreground">{t.r}</div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
 
       {/* CTA */}
       <section className="container-x pb-24">

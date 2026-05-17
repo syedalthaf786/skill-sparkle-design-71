@@ -222,3 +222,121 @@
     background: var(--gradient-hero);
   }
 }
+
+/* 24/7 Customer Support Bot – right side of footer */
+@layer components {
+  .support-bot-right {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 9999px;
+    background: var(--gradient-brand);
+    color: var(--color-primary-foreground);
+    font-size: 0.875rem;
+    font-weight: 600;
+    box-shadow: 0 8px 32px -8px color-mix(in oklab, var(--primary) 40%, transparent);
+    cursor: pointer;
+    transition: transform 250ms ease, box-shadow 250ms ease;
+    user-select: none;
+    border: none;
+    animation: support-bounce 2.5s ease-in-out infinite;
+  }
+  .support-bot-right:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 12px 40px -8px color-mix(in oklab, var(--primary) 50%, transparent);
+    animation-play-state: paused;
+  }
+  .support-bot-right .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: hsl(140 80% 55%);
+    flex-shrink: 0;
+    animation: support-pulse 2.5s ease-in-out infinite;
+  }
+
+  .support-chat-panel {
+    position: fixed;
+    bottom: 6.5rem;
+    right: 1.5rem;
+    z-index: 9998;
+    width: calc(100% - 3rem);
+    max-width: 360px;
+    border-radius: 1rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-card);
+    box-shadow: var(--shadow-elevated);
+    animation: support-slideIn 300ms ease-out;
+  }
+}
+
+@keyframes support-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  15% {
+    transform: translateY(-10px);
+  }
+  30% {
+    transform: translateY(0);
+  }
+  45% {
+    transform: translateY(-6px);
+  }
+  60% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes support-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.6);
+    opacity: 0.6;
+  }
+}
+
+@keyframes support-slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes floaty {
+}
+@keyframes carouselFade {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  10% {
+    opacity: 1;
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  40% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-carousel {
+  animation: carouselFade 15s infinite;
+}
