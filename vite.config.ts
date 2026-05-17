@@ -1,11 +1,16 @@
-// @lovable.dev/vite-tanstack-config already includes tanstackStart, viteReact,
-// tailwindcss, tsConfigPaths, cloudflare (build-only), componentTagger (dev-only),
-// VITE_* env injection, @ path alias, React/TanStack dedupe, and error loggers.
-// Use defineConfig({ vite: { ... } }) to add extra vite plugins / config as needed.
-import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+import tsConfigPaths from "vite-tsconfig-paths";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
 
 export default defineConfig({
-  tanstackStart: {
-    server: { entry: "server" },
-  },
+	plugins: [
+		tanstackStart(),
+		tailwindcss(),
+		tsConfigPaths(),
+		cloudflare(),
+		react(),
+	],
 });
