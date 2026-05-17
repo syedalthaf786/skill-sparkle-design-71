@@ -215,12 +215,12 @@ function Index() {
             <p className="mt-4 text-muted-foreground">A strategic, result-driven approach to deliver lasting impact.</p>
           </div>
           <div className="mt-14 grid gap-6 md:grid-cols-3 lg:grid-cols-5">
-            {process.map((p) => (
-              <div key={p.n} className="card-surface relative">
+            {process.map((p, i) => (
+              <Reveal key={p.n} delay={i * 100} className="card-surface relative">
                 <div className="font-display text-4xl font-bold brand-text">{p.n}</div>
                 <h3 className="mt-3 font-semibold">{p.t}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{p.d}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
