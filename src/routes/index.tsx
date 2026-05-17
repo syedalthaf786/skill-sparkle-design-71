@@ -178,11 +178,11 @@ function Index() {
       <section className="container-x py-20">
         <div className="overflow-hidden rounded-3xl border border-border p-10 md:p-14" style={{ background: "var(--gradient-brand)" }}>
           <div className="grid gap-8 text-primary-foreground md:grid-cols-4">
-            {stats.map((s) => (
-              <div key={s.l}>
+            {stats.map((s, i) => (
+              <Reveal key={s.l} delay={i * 100}>
                 <div className="font-display text-5xl font-bold">{s.n}</div>
                 <div className="mt-2 text-sm opacity-80">{s.l}</div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
