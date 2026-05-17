@@ -195,13 +195,13 @@ function Index() {
           <h2 className="mt-4 text-3xl font-bold md:text-5xl">Industries We Work With</h2>
         </div>
         <div className="mt-12 grid gap-4 sm:grid-cols-3 lg:grid-cols-3">
-          {industries.map((i) => (
-            <div key={i.t} className="card-surface flex items-center gap-4">
+          {industries.map((i, idx) => (
+            <Reveal key={i.t} delay={idx * 60} className="card-surface flex items-center gap-4">
               <div className="grid h-12 w-12 place-items-center rounded-xl bg-secondary">
                 <i.icon size={22} className="text-primary" />
               </div>
               <span className="font-semibold">{i.t}</span>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
