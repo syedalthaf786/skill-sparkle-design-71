@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import logo from "@/assets/logo1.png";
 
 const nav = [
   { to: "/", label: "Home" },
@@ -15,11 +16,13 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-xl">
       <div className="container-x flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 font-display text-xl font-bold tracking-tight">
-          <span className="grid h-8 w-8 place-items-center rounded-lg" style={{ background: "var(--gradient-brand)" }}>
-            <span className="font-display text-sm text-primary-foreground">N</span>
+        <Link
+          to="/"
+          className="flex items-center gap-2 font-display text-xl font-bold tracking-tight"
+        >
+          <span className="grid h-28 w-28 place-items-center rounded-lg overflow-hidden">
+            <img src={logo} alt="Svms Technologies" className="h-full w-full object-contain" />
           </span>
-          <span><span className="text-primary">Nova</span><span style={{ color: "var(--accent)" }}>Stack</span></span>
         </Link>
         <nav className="hidden items-center gap-1 md:flex">
           {nav.map((n) => (
@@ -35,8 +38,14 @@ export function Header() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <Link to="/contact" className="btn-primary hidden md:inline-flex">Contact</Link>
-          <button className="md:hidden rounded-md p-2 text-foreground" onClick={() => setOpen(!open)} aria-label="Menu">
+          <Link to="/contact" className="btn-primary hidden md:inline-flex">
+            Contact
+          </Link>
+          <button
+            className="md:hidden rounded-md p-2 text-foreground"
+            onClick={() => setOpen(!open)}
+            aria-label="Menu"
+          >
             {open ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
@@ -45,11 +54,18 @@ export function Header() {
         <div className="border-t border-border md:hidden">
           <div className="container-x flex flex-col py-3">
             {nav.map((n) => (
-              <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className="rounded-md px-3 py-2 text-sm font-medium text-foreground hover:bg-secondary">
+              <Link
+                key={n.to}
+                to={n.to}
+                onClick={() => setOpen(false)}
+                className="rounded-md px-3 py-2 text-sm font-medium text-foreground hover:bg-secondary"
+              >
                 {n.label}
               </Link>
             ))}
-            <Link to="/contact" onClick={() => setOpen(false)} className="btn-primary mt-2 w-full">Contact</Link>
+            <Link to="/contact" onClick={() => setOpen(false)} className="btn-primary mt-2 w-full">
+              Contact
+            </Link>
           </div>
         </div>
       )}

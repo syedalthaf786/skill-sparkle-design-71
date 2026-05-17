@@ -5,10 +5,17 @@ import { Reveal } from "@/components/site/Reveal";
 export const Route = createFileRoute("/careers")({
   head: () => ({
     meta: [
-      { title: "Careers — Join NovaStack" },
-      { name: "description", content: "Join a team that ships meaningful technology. Open roles in engineering, data, and design." },
+      { title: "Careers — Join Svms TEchnologies" },
+      {
+        name: "description",
+        content:
+          "Join a team that ships meaningful technology. Open roles in engineering, data, and design.",
+      },
       { property: "og:title", content: "Careers at NovaStack" },
-      { property: "og:description", content: "Build the future of data & digital services with us." },
+      {
+        property: "og:description",
+        content: "Build the future of data & digital services with us.",
+      },
     ],
   }),
   component: CareersPage,
@@ -33,7 +40,8 @@ function CareersPage() {
             Build the <span className="brand-text">future of work</span> with us.
           </h1>
           <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
-            We're a small, senior team shipping serious technology — data pipelines, AI products, and enterprise software. Come help us build it.
+            We're a small, senior team shipping serious technology — data pipelines, AI products,
+            and enterprise software. Come help us build it.
           </p>
         </div>
       </section>
@@ -52,18 +60,32 @@ function CareersPage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold">{r.t}</h3>
-                  <p className="text-sm text-muted-foreground">{r.loc} · {r.type}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {r.loc} · {r.type}
+                  </p>
                 </div>
               </div>
-              <Link to="/contact" className="btn-outline">Apply <ArrowRight size={14} /></Link>
+              <Link to="/contact" className="btn-outline">
+                Apply <ArrowRight size={14} />
+              </Link>
             </Reveal>
           ))}
         </div>
 
-        <div className="mt-10 rounded-3xl border border-border p-10 text-center" style={{ background: "var(--gradient-brand)" }}>
-          <h2 className="text-2xl font-bold text-primary-foreground md:text-3xl">Don't see your role?</h2>
-          <p className="mx-auto mt-3 max-w-xl text-primary-foreground/80">We're always meeting great people. Tell us what you do best.</p>
-          <Link to="/contact" className="mt-6 inline-flex items-center gap-2 rounded-full bg-background px-6 py-3 text-sm font-semibold text-foreground">
+        <div
+          className="mt-10 rounded-3xl border border-border p-10 text-center"
+          style={{ background: "var(--gradient-brand)" }}
+        >
+          <h2 className="text-2xl font-bold text-primary-foreground md:text-3xl">
+            Don't see your role?
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-primary-foreground/80">
+            We're always meeting great people. Tell us what you do best.
+          </p>
+          <Link
+            to="/contact"
+            className="mt-6 inline-flex items-center gap-2 rounded-full bg-background px-6 py-3 text-sm font-semibold text-foreground"
+          >
             Get in touch <ArrowRight size={16} />
           </Link>
         </div>
