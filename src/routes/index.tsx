@@ -139,8 +139,8 @@ function Index() {
           <p className="mt-4 text-muted-foreground">Our expertise helps businesses stay ahead with innovative, efficient, and adaptable solutions.</p>
         </div>
         <div className="mt-14 grid gap-6 md:grid-cols-3">
-          {services.map((s) => (
-            <div key={s.title} className="card-surface group">
+          {services.map((s, i) => (
+            <Reveal key={s.title} delay={i * 90} className="card-surface group">
               <div className="grid h-12 w-12 place-items-center rounded-xl" style={{ background: "color-mix(in oklab, var(--accent) 20%, transparent)" }}>
                 <s.icon size={22} className="text-primary" />
               </div>
@@ -149,7 +149,7 @@ function Index() {
               <Link to="/services" className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary">
                 Learn more <ArrowRight size={14} className="transition group-hover:translate-x-1" />
               </Link>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
