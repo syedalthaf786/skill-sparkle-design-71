@@ -1,9 +1,7 @@
-@import "tailwindcss/tailwind.css";
+@import "tailwindcss";
 @import "tw-animate-css";
 
-@layer variants {
-  @variant dark (&:is(.dark *));
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --font-display: "Sora", system-ui, sans-serif;
