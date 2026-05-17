@@ -162,13 +162,13 @@ function Index() {
             <h2 className="mt-4 text-3xl font-bold md:text-5xl">Why Businesses Choose Us</h2>
           </div>
           <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {whyUs.map((w) => (
-              <div key={w.t} className="card-surface flex items-center gap-3">
+            {whyUs.map((w, i) => (
+              <Reveal key={w.t} delay={i * 60} className="card-surface flex items-center gap-3">
                 <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg" style={{ background: "var(--gradient-brand)" }}>
                   <w.icon size={18} className="text-primary-foreground" />
                 </div>
                 <span className="font-semibold">{w.t}</span>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
