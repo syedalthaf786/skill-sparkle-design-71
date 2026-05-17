@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Brain, HeartPulse, ShoppingBag, Banknote, GraduationCap, Building2, Truck, Rocket, Store } from "lucide-react";
+import { Reveal } from "@/components/site/Reveal";
 
 export const Route = createFileRoute("/industries")({
   head: () => ({
