@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Target, Eye, Heart, ArrowRight } from "lucide-react";
+import { Reveal } from "@/components/site/Reveal";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -35,14 +36,14 @@ function AboutPage() {
             { icon: Target, t: "Our Mission", d: "Deliver scalable, high-quality solutions tailored to modern business needs." },
             { icon: Eye, t: "Our Vision", d: "Be the trusted technology partner powering the next generation of digital business." },
             { icon: Heart, t: "Our Values", d: "Innovation, accuracy, and accountability in every project we ship." },
-          ].map((b) => (
-            <div key={b.t} className="card-surface">
+          ].map((b, i) => (
+            <Reveal key={b.t} delay={i * 120} className="card-surface">
               <div className="grid h-12 w-12 place-items-center rounded-xl" style={{ background: "var(--gradient-brand)" }}>
                 <b.icon size={22} className="text-primary-foreground" />
               </div>
               <h3 className="mt-5 text-xl font-semibold">{b.t}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{b.d}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>

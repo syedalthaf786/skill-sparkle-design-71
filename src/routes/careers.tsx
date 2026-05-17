@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Briefcase } from "lucide-react";
+import { Reveal } from "@/components/site/Reveal";
 
 export const Route = createFileRoute("/careers")({
   head: () => ({
@@ -40,9 +41,13 @@ function CareersPage() {
       <section className="container-x pb-24">
         <div className="rounded-3xl border border-border bg-card">
           {roles.map((r, i) => (
-            <div key={r.t} className={`flex flex-wrap items-center justify-between gap-4 p-6 md:p-8 ${i !== 0 ? "border-t border-border" : ""}`}>
+            <Reveal
+              key={r.t}
+              delay={i * 80}
+              className={`flex flex-wrap items-center justify-between gap-4 p-6 transition-colors duration-300 hover:bg-surface md:p-8 ${i !== 0 ? "border-t border-border" : ""}`}
+            >
               <div className="flex items-center gap-4">
-                <div className="grid h-12 w-12 place-items-center rounded-xl bg-secondary">
+                <div className="grid h-12 w-12 place-items-center rounded-xl bg-secondary transition-transform duration-300 hover:scale-110">
                   <Briefcase size={20} className="text-primary" />
                 </div>
                 <div>
@@ -51,7 +56,7 @@ function CareersPage() {
                 </div>
               </div>
               <Link to="/contact" className="btn-outline">Apply <ArrowRight size={14} /></Link>
-            </div>
+            </Reveal>
           ))}
         </div>
 

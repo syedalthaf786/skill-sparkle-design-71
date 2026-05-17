@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Brain, HeartPulse, ShoppingBag, Banknote, GraduationCap, Building2, Truck, Rocket, Store } from "lucide-react";
+import { Reveal } from "@/components/site/Reveal";
 
 export const Route = createFileRoute("/industries")({
   head: () => ({
@@ -40,14 +41,14 @@ function IndustriesPage() {
 
       <section className="container-x pb-24">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {industries.map((i) => (
-            <div key={i.t} className="card-surface">
+          {industries.map((i, idx) => (
+            <Reveal key={i.t} delay={idx * 70} className="card-surface">
               <div className="grid h-12 w-12 place-items-center rounded-xl" style={{ background: "color-mix(in oklab, var(--accent) 22%, transparent)" }}>
                 <i.icon size={22} className="text-primary" />
               </div>
               <h3 className="mt-5 text-xl font-semibold">{i.t}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{i.d}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>

@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Database, Code2, Cpu, Check, ArrowRight } from "lucide-react";
+import { Reveal } from "@/components/site/Reveal";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
@@ -55,9 +56,9 @@ function ServicesPage() {
 
       <section className="container-x space-y-10 pb-24">
         {services.map((s, idx) => (
-          <div key={s.title} className="grid gap-8 rounded-3xl border border-border bg-card p-8 md:grid-cols-3 md:p-12">
+          <Reveal key={s.title} delay={idx * 120} className="grid gap-8 rounded-3xl border border-border bg-card p-8 transition-all duration-500 hover:shadow-[var(--shadow-elevated)] md:grid-cols-3 md:p-12">
             <div className="md:col-span-1">
-              <div className="grid h-14 w-14 place-items-center rounded-2xl" style={{ background: "var(--gradient-brand)" }}>
+              <div className="grid h-14 w-14 place-items-center rounded-2xl animate-floaty" style={{ background: "var(--gradient-brand)" }}>
                 <s.icon size={26} className="text-primary-foreground" />
               </div>
               <div className="mt-4 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">0{idx + 1}</div>
@@ -69,15 +70,15 @@ function ServicesPage() {
             </div>
             <div className="md:col-span-2">
               <div className="grid gap-3 sm:grid-cols-2">
-                {s.items.map((i) => (
-                  <div key={i} className="flex items-center gap-3 rounded-xl border border-border bg-background p-4">
+                {s.items.map((i, k) => (
+                  <Reveal key={i} delay={k * 40} className="flex items-center gap-3 rounded-xl border border-border bg-background p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-[color:var(--accent)] hover:shadow-[var(--shadow-soft)]">
                     <Check size={16} className="shrink-0" style={{ color: "var(--accent)" }} />
                     <span className="text-sm font-medium">{i}</span>
-                  </div>
+                  </Reveal>
                 ))}
               </div>
             </div>
-          </div>
+          </Reveal>
         ))}
 
         <div className="rounded-3xl border border-border p-10 text-center md:p-14" style={{ background: "var(--gradient-brand)" }}>

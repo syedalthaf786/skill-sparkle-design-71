@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import heroTeam from "@/assets/hero-team.jpg";
+import { Reveal } from "@/components/site/Reveal";
 import {
   ArrowRight, Sparkles, ShieldCheck, Zap, Database, Code2, Cpu,
   CheckCircle2, Users, Award, Clock, Quote,
@@ -94,7 +95,7 @@ function Index() {
               Trusted by startups, enterprises & AI-driven businesses
             </p>
           </div>
-          <div className="relative">
+          <div className="relative animate-floaty">
             <div className="absolute -inset-6 -z-10 rounded-[2rem]" style={{ background: "var(--gradient-brand)", opacity: 0.08, filter: "blur(40px)" }} />
             <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-[var(--shadow-elevated)]">
               <img src={heroTeam} alt="Professional NovaStack team" width={1920} height={1080} className="h-auto w-full" />
@@ -138,8 +139,8 @@ function Index() {
           <p className="mt-4 text-muted-foreground">Our expertise helps businesses stay ahead with innovative, efficient, and adaptable solutions.</p>
         </div>
         <div className="mt-14 grid gap-6 md:grid-cols-3">
-          {services.map((s) => (
-            <div key={s.title} className="card-surface group">
+          {services.map((s, i) => (
+            <Reveal key={s.title} delay={i * 90} className="card-surface group">
               <div className="grid h-12 w-12 place-items-center rounded-xl" style={{ background: "color-mix(in oklab, var(--accent) 20%, transparent)" }}>
                 <s.icon size={22} className="text-primary" />
               </div>
@@ -148,7 +149,7 @@ function Index() {
               <Link to="/services" className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary">
                 Learn more <ArrowRight size={14} className="transition group-hover:translate-x-1" />
               </Link>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -161,13 +162,13 @@ function Index() {
             <h2 className="mt-4 text-3xl font-bold md:text-5xl">Why Businesses Choose Us</h2>
           </div>
           <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {whyUs.map((w) => (
-              <div key={w.t} className="card-surface flex items-center gap-3">
+            {whyUs.map((w, i) => (
+              <Reveal key={w.t} delay={i * 60} className="card-surface flex items-center gap-3">
                 <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg" style={{ background: "var(--gradient-brand)" }}>
                   <w.icon size={18} className="text-primary-foreground" />
                 </div>
                 <span className="font-semibold">{w.t}</span>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -177,11 +178,11 @@ function Index() {
       <section className="container-x py-20">
         <div className="overflow-hidden rounded-3xl border border-border p-10 md:p-14" style={{ background: "var(--gradient-brand)" }}>
           <div className="grid gap-8 text-primary-foreground md:grid-cols-4">
-            {stats.map((s) => (
-              <div key={s.l}>
+            {stats.map((s, i) => (
+              <Reveal key={s.l} delay={i * 100}>
                 <div className="font-display text-5xl font-bold">{s.n}</div>
                 <div className="mt-2 text-sm opacity-80">{s.l}</div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -194,13 +195,13 @@ function Index() {
           <h2 className="mt-4 text-3xl font-bold md:text-5xl">Industries We Work With</h2>
         </div>
         <div className="mt-12 grid gap-4 sm:grid-cols-3 lg:grid-cols-3">
-          {industries.map((i) => (
-            <div key={i.t} className="card-surface flex items-center gap-4">
+          {industries.map((i, idx) => (
+            <Reveal key={i.t} delay={idx * 60} className="card-surface flex items-center gap-4">
               <div className="grid h-12 w-12 place-items-center rounded-xl bg-secondary">
                 <i.icon size={22} className="text-primary" />
               </div>
               <span className="font-semibold">{i.t}</span>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -214,12 +215,12 @@ function Index() {
             <p className="mt-4 text-muted-foreground">A strategic, result-driven approach to deliver lasting impact.</p>
           </div>
           <div className="mt-14 grid gap-6 md:grid-cols-3 lg:grid-cols-5">
-            {process.map((p) => (
-              <div key={p.n} className="card-surface relative">
+            {process.map((p, i) => (
+              <Reveal key={p.n} delay={i * 100} className="card-surface relative">
                 <div className="font-display text-4xl font-bold brand-text">{p.n}</div>
                 <h3 className="mt-3 font-semibold">{p.t}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{p.d}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -232,15 +233,15 @@ function Index() {
           <h2 className="mt-4 text-3xl font-bold md:text-5xl">What Clients Say</h2>
         </div>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {testimonials.map((t) => (
-            <div key={t.a} className="card-surface">
+          {testimonials.map((t, i) => (
+            <Reveal key={t.a} delay={i * 120} className="card-surface">
               <Quote size={28} className="text-primary opacity-40" />
               <p className="mt-4 text-foreground">"{t.q}"</p>
               <div className="mt-6 border-t border-border pt-4">
                 <div className="font-semibold">{t.a}</div>
                 <div className="text-xs text-muted-foreground">{t.r}</div>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
