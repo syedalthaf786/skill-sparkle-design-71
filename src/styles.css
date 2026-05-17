@@ -149,10 +149,34 @@
   }
 
   .card-surface {
-    @apply rounded-2xl border bg-card p-6 transition-all duration-300;
+    @apply relative overflow-hidden rounded-2xl border bg-card p-6 transition-all duration-500;
     box-shadow: 0 1px 0 color-mix(in oklab, var(--color-primary) 6%, transparent);
   }
-  .card-surface:hover { box-shadow: var(--shadow-soft); transform: translateY(-2px); }
+  .card-surface::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: var(--gradient-brand);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 500ms ease;
+    pointer-events: none;
+  }
+  .card-surface:hover {
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-4px);
+  }
+  .card-surface:hover::before { opacity: 1; }
+
+  @keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  .animate-floaty { animation: floaty 6s ease-in-out infinite; }
 
   .brand-text {
     background: var(--gradient-brand);
