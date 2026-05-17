@@ -95,7 +95,7 @@ function Index() {
               Trusted by startups, enterprises & AI-driven businesses
             </p>
           </div>
-          <div className="relative">
+          <div className="relative animate-floaty">
             <div className="absolute -inset-6 -z-10 rounded-[2rem]" style={{ background: "var(--gradient-brand)", opacity: 0.08, filter: "blur(40px)" }} />
             <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-[var(--shadow-elevated)]">
               <img src={heroTeam} alt="Professional NovaStack team" width={1920} height={1080} className="h-auto w-full" />
