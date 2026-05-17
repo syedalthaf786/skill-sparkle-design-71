@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import heroTeam from "@/assets/hero-team.jpg";
+import { Reveal } from "@/components/site/Reveal";
 import {
   ArrowRight, Sparkles, ShieldCheck, Zap, Database, Code2, Cpu,
   CheckCircle2, Users, Award, Clock, Quote,
