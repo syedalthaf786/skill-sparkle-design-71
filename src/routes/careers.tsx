@@ -1,73 +1,360 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Briefcase } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
+import { ArrowRight, Briefcase, X, Send } from "lucide-react";
+
 import { Reveal } from "@/components/site/Reveal";
+import { useState } from "react";
 
 export const Route = createFileRoute("/careers")({
   head: () => ({
     meta: [
-      { title: "Careers — Join NovaStack" },
-      { name: "description", content: "Join a team that ships meaningful technology. Open roles in engineering, data, and design." },
-      { property: "og:title", content: "Careers at NovaStack" },
-      { property: "og:description", content: "Build the future of data & digital services with us." },
+      {
+        title: "Careers — Join Svms Technologies",
+      },
+      {
+        name: "description",
+        content: "Join a team that ships meaningful technology.",
+      },
     ],
   }),
   component: CareersPage,
 });
 
 const roles = [
-  { t: "Senior Full-Stack Engineer", loc: "Hyderabad / Remote", type: "Full-time" },
-  { t: "Data Annotation Specialist", loc: "Hyderabad", type: "Full-time" },
-  { t: "Machine Learning Engineer", loc: "Remote", type: "Full-time" },
-  { t: "Product Designer", loc: "Hyderabad / Remote", type: "Full-time" },
-  { t: "DevOps Engineer", loc: "Remote", type: "Contract" },
+  {
+    t: "Senior Full-Stack Engineer",
+    loc: "Hyderabad / Remote",
+    type: "Full-time",
+  },
+
+  {
+    t: "Data Annotation Specialist",
+    loc: "Hyderabad",
+    type: "Full-time",
+  },
+
+  {
+    t: "Machine Learning Engineer",
+    loc: "Remote",
+    type: "Full-time",
+  },
+
+  {
+    t: "Product Designer",
+    loc: "Hyderabad / Remote",
+    type: "Full-time",
+  },
+
+  {
+    t: "DevOps Engineer",
+    loc: "Remote",
+    type: "Contract",
+  },
 ];
 
 function CareersPage() {
+  const [open, setOpen] = useState(false);
+
+  const [selectedRole, setSelectedRole] = useState("");
+
+  const [loading, setLoading] = useState(false);
+
+  const [sent, setSent] = useState(false);
+
+  const [step, setStep] = useState(1);
+
+  // =========================
+  // SUBMIT FORM
+  // =========================
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setLoading(true);
+
+    const form = e.currentTarget;
+
+    const formData = new FormData(form);
+
+    // WEB3FORMS KEY
+    formData.append("access_key", "e4d6cdd5-7ee4-41ae-8c25-679fbcb4e3c8");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSent(true);
+
+        form.reset();
+
+        setTimeout(() => {
+          setOpen(false);
+          setSent(false);
+          setStep(1);
+        }, 2500);
+      } else {
+        alert("Something went wrong!");
+      }
+    } catch (error) {
+      console.log(error);
+
+      alert("Failed to send application");
+    }
+
+    setLoading(false);
+  };
+
   return (
     <div>
+      {/* HERO */}
       <section className="relative overflow-hidden">
         <div className="hero-glow absolute inset-0 -z-10" />
+
         <div className="container-x py-20 lg:py-28">
           <span className="eyebrow">Careers</span>
+
           <h1 className="mt-4 max-w-3xl text-4xl font-bold md:text-6xl">
             Build the <span className="brand-text">future of work</span> with us.
           </h1>
+
           <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
-            We're a small, senior team shipping serious technology — data pipelines, AI products, and enterprise software. Come help us build it.
+            Join our growing team and build modern AI & software products.
           </p>
         </div>
       </section>
 
+      {/* ROLES */}
       <section className="container-x pb-24">
-        <div className="rounded-3xl border border-border bg-card">
+        <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl">
           {roles.map((r, i) => (
             <Reveal
               key={r.t}
               delay={i * 80}
-              className={`flex flex-wrap items-center justify-between gap-4 p-6 transition-colors duration-300 hover:bg-surface md:p-8 ${i !== 0 ? "border-t border-border" : ""}`}
+              className={`flex flex-wrap items-center justify-between gap-4 p-6 transition-all duration-300 hover:bg-white/5 md:p-8 ${
+                i !== 0 ? "border-t border-white/10" : ""
+              }`}
             >
               <div className="flex items-center gap-4">
-                <div className="grid h-12 w-12 place-items-center rounded-xl bg-secondary transition-transform duration-300 hover:scale-110">
-                  <Briefcase size={20} className="text-primary" />
+                <div className="grid h-14 w-14 place-items-center rounded-2xl bg-emerald-300 shadow-xl shadow-emerald-400/20 transition-all duration-300 hover:scale-110">
+                  <Briefcase size={22} className="text-emerald-950" />
                 </div>
+
                 <div>
                   <h3 className="text-lg font-semibold">{r.t}</h3>
-                  <p className="text-sm text-muted-foreground">{r.loc} · {r.type}</p>
+
+                  <p className="text-sm text-muted-foreground">
+                    {r.loc} · {r.type}
+                  </p>
                 </div>
               </div>
-              <Link to="/contact" className="btn-outline">Apply <ArrowRight size={14} /></Link>
+
+              {/* APPLY BUTTON */}
+              <button
+                onClick={() => {
+                  setOpen(true);
+                  setSelectedRole(r.t);
+                }}
+                className="inline-flex items-center gap-2 rounded-full bg-emerald-300 px-5 py-3 text-sm font-semibold text-emerald-950 transition-all duration-300 hover:-translate-y-1 hover:scale-105"
+              >
+                Apply
+                <ArrowRight size={14} />
+              </button>
             </Reveal>
           ))}
         </div>
-
-        <div className="mt-10 rounded-3xl border border-border p-10 text-center" style={{ background: "var(--gradient-brand)" }}>
-          <h2 className="text-2xl font-bold text-primary-foreground md:text-3xl">Don't see your role?</h2>
-          <p className="mx-auto mt-3 max-w-xl text-primary-foreground/80">We're always meeting great people. Tell us what you do best.</p>
-          <Link to="/contact" className="mt-6 inline-flex items-center gap-2 rounded-full bg-background px-6 py-3 text-sm font-semibold text-foreground">
-            Get in touch <ArrowRight size={16} />
-          </Link>
-        </div>
       </section>
+
+      {/* POPUP FORM */}
+      {open && (
+        <div className="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4 backdrop-blur-sm">
+          <div className="relative w-full max-w-lg rounded-3xl border border-white/10 bg-background p-6 shadow-2xl md:p-8">
+            {/* CLOSE */}
+            <button
+              onClick={() => {
+                setOpen(false);
+                setStep(1);
+              }}
+              className="absolute right-4 top-4 rounded-full bg-white/5 p-2 transition hover:bg-white/10"
+            >
+              <X size={18} />
+            </button>
+
+            {/* STEP INDICATOR */}
+            <div className="mb-8 flex items-center justify-center gap-3">
+              <div
+                className={`flex h-10 w-10 items-center justify-center rounded-xl text-sm font-bold transition-all duration-300 ${
+                  step >= 1 ? "bg-emerald-300 text-emerald-950" : "bg-white/5 text-muted-foreground"
+                }`}
+              >
+                1
+              </div>
+
+              <div className="h-1 w-10 rounded bg-white/10" />
+
+              <div
+                className={`flex h-10 w-10 items-center justify-center rounded-xl text-sm font-bold transition-all duration-300 ${
+                  step >= 2 ? "bg-emerald-300 text-emerald-950" : "bg-white/5 text-muted-foreground"
+                }`}
+              >
+                2
+              </div>
+
+              <div className="h-1 w-10 rounded bg-white/10" />
+
+              <div
+                className={`flex h-10 w-10 items-center justify-center rounded-xl text-sm font-bold transition-all duration-300 ${
+                  step >= 3 ? "bg-emerald-300 text-emerald-950" : "bg-white/5 text-muted-foreground"
+                }`}
+              >
+                3
+              </div>
+            </div>
+
+            {/* SUCCESS */}
+            {sent ? (
+              <div className="grid place-items-center py-10 text-center">
+                <div className="grid h-16 w-16 place-items-center rounded-full bg-emerald-300 shadow-2xl shadow-emerald-300/40 animate-bounce">
+                  <Send size={24} className="text-emerald-950" />
+                </div>
+
+                <h3 className="mt-5 text-2xl font-bold">Application Sent</h3>
+
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Our HR team will contact you soon.
+                </p>
+              </div>
+            ) : (
+              <>
+                <h2 className="text-center text-2xl font-bold md:text-3xl">
+                  Apply for <span className="brand-text">{selectedRole}</span>
+                </h2>
+
+                <form onSubmit={handleSubmit} className="mt-8">
+                  <input type="hidden" name="role" value={selectedRole} />
+
+                  {/* STEP 1 */}
+                  {step === 1 && (
+                    <div className="space-y-5">
+                      <Field label="Full Name" name="name" placeholder="John Doe" />
+
+                      <Field
+                        label="Email Address"
+                        type="email"
+                        name="email"
+                        placeholder="you@example.com"
+                      />
+
+                      <button
+                        type="button"
+                        onClick={() => setStep(2)}
+                        className="w-full rounded-2xl bg-emerald-300 px-6 py-3 font-semibold text-emerald-950 transition hover:scale-[1.02]"
+                      >
+                        Continue
+                      </button>
+                    </div>
+                  )}
+
+                  {/* STEP 2 */}
+                  {step === 2 && (
+                    <div className="space-y-5">
+                      <Field label="Phone Number" name="phone" placeholder="+91 9876543210" />
+
+                      <Field label="Resume Link" name="resume" placeholder="https://" />
+
+                      <div className="flex gap-3">
+                        <button
+                          type="button"
+                          onClick={() => setStep(1)}
+                          className="w-full rounded-2xl border border-white/10 bg-white/5 px-6 py-3 font-semibold"
+                        >
+                          Back
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => setStep(3)}
+                          className="w-full rounded-2xl bg-emerald-300 px-6 py-3 font-semibold text-emerald-950 transition hover:scale-[1.02]"
+                        >
+                          Continue
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* STEP 3 */}
+                  {step === 3 && (
+                    <div className="space-y-5">
+                      <div>
+                        <label className="text-sm font-semibold">Cover Letter</label>
+
+                        <textarea
+                          required
+                          name="message"
+                          rows={5}
+                          placeholder="Tell us about yourself..."
+                          className="mt-2 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 outline-none transition focus:border-emerald-300 focus:ring-2 focus:ring-emerald-300/20"
+                        />
+                      </div>
+
+                      <div className="flex gap-3">
+                        <button
+                          type="button"
+                          onClick={() => setStep(2)}
+                          className="w-full rounded-2xl border border-white/10 bg-white/5 px-6 py-3 font-semibold"
+                        >
+                          Back
+                        </button>
+
+                        <button
+                          type="submit"
+                          disabled={loading}
+                          className="w-full rounded-2xl bg-emerald-300 px-6 py-3 font-semibold text-emerald-950 shadow-xl shadow-emerald-300/30 transition hover:scale-[1.02] disabled:opacity-50"
+                        >
+                          {loading ? "Sending..." : "Submit"}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </form>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// =========================
+// FIELD COMPONENT
+// =========================
+
+function Field({
+  label,
+  name,
+  type = "text",
+  placeholder,
+}: {
+  label: string;
+  name: string;
+  type?: string;
+  placeholder?: string;
+}) {
+  return (
+    <div>
+      <label className="text-sm font-semibold">{label}</label>
+
+      <input
+        required
+        type={type}
+        name={name}
+        placeholder={placeholder}
+        className="mt-2 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 outline-none transition focus:border-emerald-300 focus:ring-2 focus:ring-emerald-300/20"
+      />
     </div>
   );
 }
