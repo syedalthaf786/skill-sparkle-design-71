@@ -1,26 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import {
-  Brain,
-  HeartPulse,
-  ShoppingBag,
-  Banknote,
-  GraduationCap,
-  Building2,
-  Truck,
-  Rocket,
-  Store,
-} from "lucide-react";
+import { Brain, HeartPulse, ShoppingBag, Banknote, GraduationCap, Building2, Truck, Rocket, Store } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
 
 export const Route = createFileRoute("/industries")({
   head: () => ({
     meta: [
-      { title: "Industries — Svms Technologies" },
-      {
-        name: "description",
-        content:
-          "We serve AI, Healthcare, E-Commerce, Finance, Education, Retail, Real Estate, Logistics and more.",
-      },
+      { title: "Industries — NovaStack" },
+      { name: "description", content: "We serve AI, Healthcare, E-Commerce, Finance, Education, Retail, Real Estate, Logistics and more." },
       { property: "og:title", content: "Industries We Serve" },
       { property: "og:description", content: "Domain expertise across the modern economy." },
     ],
@@ -29,27 +15,11 @@ export const Route = createFileRoute("/industries")({
 });
 
 const industries = [
-  {
-    icon: Brain,
-    t: "Artificial Intelligence",
-    d: "Datasets, MLOps, and intelligent product surfaces.",
-  },
-  {
-    icon: HeartPulse,
-    t: "Healthcare",
-    d: "HIPAA-aware data, clinical tools, and patient platforms.",
-  },
-  {
-    icon: ShoppingBag,
-    t: "E-Commerce",
-    d: "Conversion-focused storefronts and back-office automation.",
-  },
+  { icon: Brain, t: "Artificial Intelligence", d: "Datasets, MLOps, and intelligent product surfaces." },
+  { icon: HeartPulse, t: "Healthcare", d: "HIPAA-aware data, clinical tools, and patient platforms." },
+  { icon: ShoppingBag, t: "E-Commerce", d: "Conversion-focused storefronts and back-office automation." },
   { icon: Banknote, t: "Finance", d: "Secure dashboards, analytics, and compliant workflows." },
-  {
-    icon: GraduationCap,
-    t: "Education",
-    d: "Learning platforms, content tagging, and adaptive systems.",
-  },
+  { icon: GraduationCap, t: "Education", d: "Learning platforms, content tagging, and adaptive systems." },
   { icon: Store, t: "Retail", d: "Inventory, POS integrations, and customer experience." },
   { icon: Building2, t: "Real Estate", d: "Listings, CRMs, and virtual tour platforms." },
   { icon: Truck, t: "Logistics", d: "Tracking, routing, and supply chain automation." },
@@ -73,10 +43,7 @@ function IndustriesPage() {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {industries.map((i, idx) => (
             <Reveal key={i.t} delay={idx * 70} className="card-surface">
-              <div
-                className="grid h-12 w-12 place-items-center rounded-xl"
-                style={{ background: "color-mix(in oklab, var(--accent) 22%, transparent)" }}
-              >
+              <div className="grid h-12 w-12 place-items-center rounded-xl" style={{ background: "color-mix(in oklab, var(--accent) 22%, transparent)" }}>
                 <i.icon size={22} className="text-primary" />
               </div>
               <h3 className="mt-5 text-xl font-semibold">{i.t}</h3>

@@ -1,4 +1,5 @@
 @import "tailwindcss" source(none);
+@source "../src";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -75,18 +76,12 @@
   --ring: oklch(0.42 0.18 260);
 
   --gradient-brand: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-  --gradient-hero: radial-gradient(
-    ellipse 80% 60% at 50% 0%,
-    color-mix(in oklab, var(--primary-glow) 18%, transparent),
-    transparent 60%
-  );
+  --gradient-hero: radial-gradient(ellipse 80% 60% at 50% 0%, color-mix(in oklab, var(--primary-glow) 18%, transparent), transparent 60%);
   --gradient-soft: linear-gradient(180deg, var(--surface) 0%, var(--background) 100%);
 
   --shadow-soft: 0 4px 24px -8px color-mix(in oklab, var(--primary) 18%, transparent);
   --shadow-elevated: 0 20px 60px -20px color-mix(in oklab, var(--primary) 30%, transparent);
-  --shadow-glow:
-    0 0 0 1px color-mix(in oklab, var(--primary) 12%, transparent),
-    0 10px 40px -12px color-mix(in oklab, var(--accent) 35%, transparent);
+  --shadow-glow: 0 0 0 1px color-mix(in oklab, var(--primary) 12%, transparent), 0 10px 40px -12px color-mix(in oklab, var(--accent) 35%, transparent);
 }
 
 .dark {
@@ -113,12 +108,8 @@
 }
 
 @layer base {
-  * {
-    border-color: var(--color-border);
-  }
-  html {
-    scroll-behavior: smooth;
-  }
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
@@ -126,94 +117,39 @@
     font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
   }
-  h1,
-  h2,
-  h3,
-  h4,
-  h5 {
+  h1, h2, h3, h4, h5 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
   }
 }
 
 @layer components {
-  .container-x {
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-    max-width: 80rem;
-    padding-left: 1.5rem !important;
-    padding-right: 1.5rem !important;
-  }
-
-  @media (min-width: 1024px) {
-    .container-x {
-      padding-left: 2.5rem !important;
-      padding-right: 2.5rem !important;
-    }
-  }
+  .container-x { @apply mx-auto w-full max-w-7xl px-6 lg:px-10; }
 
   .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    border-radius: 9999px;
-    padding: 0.75rem 1.5rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    transition: all 300ms ease;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300;
     background: var(--gradient-brand);
     color: var(--color-primary-foreground);
     box-shadow: var(--shadow-soft);
   }
-  .btn-primary:hover {
-    box-shadow: var(--shadow-glow);
-    transform: translateY(-1px);
-  }
+  .btn-primary:hover { box-shadow: var(--shadow-glow); transform: translateY(-1px); }
 
   .btn-outline {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    border-radius: 9999px;
-    border-style: solid;
-    padding: 0.75rem 1.5rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    transition: all 300ms ease;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border px-6 py-3 text-sm font-semibold transition-all duration-300;
     border-color: var(--color-border);
     color: var(--color-foreground);
     background: var(--color-card);
   }
-  .btn-outline:hover {
-    border-color: var(--color-primary);
-    color: var(--color-primary);
-  }
+  .btn-outline:hover { border-color: var(--color-primary); color: var(--color-primary); }
 
   .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    border-radius: 9999px;
-    padding: 0.25rem 0.75rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
+    @apply inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em];
     background: color-mix(in oklab, var(--color-accent) 18%, transparent);
     color: color-mix(in oklab, var(--color-primary) 80%, black);
   }
 
   .card-surface {
-    position: relative;
-    overflow: hidden;
-    border-radius: var(--radius-2xl);
-    border: 1px solid var(--color-border);
-    background-color: var(--color-card);
-    padding: 1.5rem;
-    transition: all 500ms ease;
+    @apply relative overflow-hidden rounded-2xl border bg-card p-6 transition-all duration-500;
     box-shadow: 0 1px 0 color-mix(in oklab, var(--color-primary) 6%, transparent);
   }
   .card-surface::before {
@@ -223,16 +159,9 @@
     border-radius: inherit;
     padding: 1px;
     background: var(--gradient-brand);
-    -webkit-mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    /* Standard property for broader compatibility */
-    mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
-    /* 'exclude' is the standard equivalent of WebKit's 'xor' composite mode */
-    mask-composite: exclude;
+            mask-composite: exclude;
     opacity: 0;
     transition: opacity 500ms ease;
     pointer-events: none;
@@ -241,22 +170,13 @@
     box-shadow: var(--shadow-glow);
     transform: translateY(-4px);
   }
-  .card-surface:hover::before {
-    opacity: 1;
-  }
+  .card-surface:hover::before { opacity: 1; }
 
   @keyframes floaty {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-6px);
-    }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
   }
-  .animate-floaty {
-    animation: floaty 6s ease-in-out infinite;
-  }
+  .animate-floaty { animation: floaty 6s ease-in-out infinite; }
 
   .brand-text {
     background: var(--gradient-brand);
@@ -265,125 +185,5 @@
     color: transparent;
   }
 
-  .hero-glow {
-    background: var(--gradient-hero);
-  }
-}
-
-/* 24/7 Customer Support Bot – right side of footer */
-@layer components {
-  .support-bot-right {
-    position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    z-index: 9998;
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-    padding: 0.75rem 1.25rem;
-    border-radius: 9999px;
-    background: var(--gradient-brand);
-    color: var(--color-primary-foreground);
-    font-size: 0.875rem;
-    font-weight: 600;
-    box-shadow: 0 8px 32px -8px color-mix(in oklab, var(--primary) 40%, transparent);
-    cursor: pointer;
-    transition: transform 250ms ease, box-shadow 250ms ease;
-    user-select: none;
-    border: none;
-    animation: support-bounce 2.5s ease-in-out infinite;
-  }
-  .support-bot-right:hover {
-    transform: translateY(-2px) scale(1.03);
-    box-shadow: 0 12px 40px -8px color-mix(in oklab, var(--primary) 50%, transparent);
-    animation-play-state: paused;
-  }
-  .support-bot-right .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: hsl(140 80% 55%);
-    flex-shrink: 0;
-    animation: support-pulse 2.5s ease-in-out infinite;
-  }
-
-  .support-chat-panel {
-    position: fixed;
-    bottom: 6.5rem;
-    right: 1.5rem;
-    z-index: 9998;
-    width: calc(100% - 3rem);
-    max-width: 360px;
-    border-radius: 1rem;
-    border: 1px solid var(--color-border);
-    background: var(--color-card);
-    box-shadow: var(--shadow-elevated);
-    animation: support-slideIn 300ms ease-out;
-  }
-}
-
-@keyframes support-bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  15% {
-    transform: translateY(-10px);
-  }
-  30% {
-    transform: translateY(0);
-  }
-  45% {
-    transform: translateY(-6px);
-  }
-  60% {
-    transform: translateY(0);
-  }
-}
-
-@keyframes support-pulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.6);
-    opacity: 0.6;
-  }
-}
-
-@keyframes support-slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px) scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes floaty {
-}
-@keyframes carouselFade {
-  0% {
-    opacity: 0;
-    transform: scale(1);
-  }
-  10% {
-    opacity: 1;
-  }
-  30% {
-    opacity: 1;
-    transform: scale(1.05);
-  }
-  40% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-.animate-carousel {
-  animation: carouselFade 15s infinite;
+  .hero-glow { background: var(--gradient-hero); }
 }
