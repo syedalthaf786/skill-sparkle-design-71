@@ -4,6 +4,38 @@ import { ArrowRight, Briefcase, X, Send } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
 import { useState } from "react";
 
+const roles = [
+  {
+    t: "Senior Full-Stack Engineer",
+    loc: "Hyderabad / Remote",
+    type: "Full-time",
+  },
+
+  {
+    t: "Data Annotation Specialist",
+    loc: "Hyderabad",
+    type: "Full-time",
+  },
+
+  {
+    t: "Machine Learning Engineer",
+    loc: "Remote",
+    type: "Full-time",
+  },
+
+  {
+    t: "Product Designer",
+    loc: "Hyderabad / Remote",
+    type: "Full-time",
+  },
+
+  {
+    t: "DevOps Engineer",
+    loc: "Remote",
+    type: "Contract",
+  },
+];
+
 export default function CareersPage() {
   const [open, setOpen] = useState(false);
 
