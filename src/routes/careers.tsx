@@ -1,57 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { ArrowRight, Briefcase, X, Send } from "lucide-react";
 
 import { Reveal } from "@/components/site/Reveal";
 import { useState } from "react";
 
-export const Route = createFileRoute("/careers")({
-  head: () => ({
-    meta: [
-      {
-        title: "Careers — Join Svms Technologies",
-      },
-      {
-        name: "description",
-        content: "Join a team that ships meaningful technology.",
-      },
-    ],
-  }),
-  component: CareersPage,
-});
-
-const roles = [
-  {
-    t: "Senior Full-Stack Engineer",
-    loc: "Hyderabad / Remote",
-    type: "Full-time",
-  },
-
-  {
-    t: "Data Annotation Specialist",
-    loc: "Hyderabad",
-    type: "Full-time",
-  },
-
-  {
-    t: "Machine Learning Engineer",
-    loc: "Remote",
-    type: "Full-time",
-  },
-
-  {
-    t: "Product Designer",
-    loc: "Hyderabad / Remote",
-    type: "Full-time",
-  },
-
-  {
-    t: "DevOps Engineer",
-    loc: "Remote",
-    type: "Contract",
-  },
-];
-
-function CareersPage() {
+export default function CareersPage() {
   const [open, setOpen] = useState(false);
 
   const [selectedRole, setSelectedRole] = useState("");
@@ -107,6 +60,28 @@ function CareersPage() {
 
     setLoading(false);
   };
+  const roles = [
+  {
+    t: "Frontend Developer",
+    loc: "Remote",
+    type: "Full Time",
+  },
+  {
+    t: "Backend Engineer",
+    loc: "Hyderabad",
+    type: "Full Time",
+  },
+  {
+    t: "UI/UX Designer",
+    loc: "Bangalore",
+    type: "Internship",
+  },
+  {
+    t: "AI Engineer",
+    loc: "Remote",
+    type: "Contract",
+  },
+];
 
   return (
     <div>
@@ -136,7 +111,7 @@ function CareersPage() {
               delay={i * 80}
               className={`flex flex-wrap items-center justify-between gap-4 p-6 transition-all duration-300 hover:bg-white/5 md:p-8 ${
                 i !== 0 ? "border-t border-white/10" : ""
-              }`}
+          }`}
             >
               <div className="flex items-center gap-4">
                 <div className="grid h-14 w-14 place-items-center rounded-2xl bg-emerald-300 shadow-xl shadow-emerald-400/20 transition-all duration-300 hover:scale-110">

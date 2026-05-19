@@ -1,25 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { Database, Code2, Cpu, Check, ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
-
-export const Route = createFileRoute("/services")({
-  head: () => ({
-    meta: [
-      { title: "Services — Data, Web & IT Solutions | Svms Technologies" },
-      {
-        name: "description",
-        content:
-          "AI data annotation, web design & development, and custom IT software solutions for startups and enterprises.",
-      },
-      { property: "og:title", content: "Svms Technologies Services" },
-      {
-        property: "og:description",
-        content: "End-to-end technology services tailored for modern businesses.",
-      },
-    ],
-  }),
-  component: ServicesPage,
-});
 
 const services = [
   {
@@ -76,7 +57,7 @@ const services = [
   },
 ];
 
-function ServicesPage() {
+export default function ServicesPage() {
   return (
     <div>
       <section className="relative overflow-hidden">
@@ -133,22 +114,22 @@ function ServicesPage() {
             </div>
           </Reveal>
         ))}
-
-        <div
-          className="rounded-3xl border border-border p-10 text-center md:p-14"
-          style={{ background: "var(--gradient-brand)" }}
-        >
-          <h2 className="text-3xl font-bold text-primary-foreground md:text-4xl">
-            Ready to start your project?
-          </h2>
-          <Link
-            to="/contact"
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-background px-6 py-3 text-sm font-semibold text-foreground transition hover:scale-105"
-          >
-            Get a Quote <ArrowRight size={16} />
-          </Link>
-        </div>
       </section>
+
+      <div
+        className="rounded-3xl border border-border p-10 text-center md:p-14"
+        style={{ background: "var(--gradient-brand)" }}
+      >
+        <h2 className="text-3xl font-bold text-primary-foreground md:text-4xl">
+          Ready to start your project?
+        </h2>
+        <Link
+          to="/contact"
+          className="mt-6 inline-flex items-center gap-2 rounded-full bg-background px-6 py-3 text-sm font-semibold text-foreground transition hover:scale-105"
+        >
+          Get a Quote <ArrowRight size={16} />
+        </Link>
+      </div>
     </div>
   );
 }

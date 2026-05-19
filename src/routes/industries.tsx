@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import {
   Brain,
   HeartPulse,
@@ -11,22 +11,6 @@ import {
   Store,
 } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
-
-export const Route = createFileRoute("/industries")({
-  head: () => ({
-    meta: [
-      { title: "Industries — NovaStack" },
-      {
-        name: "description",
-        content:
-          "We serve AI, Healthcare, E-Commerce, Finance, Education, Retail, Real Estate, Logistics and more.",
-      },
-      { property: "og:title", content: "Industries We Serve" },
-      { property: "og:description", content: "Domain expertise across the modern economy." },
-    ],
-  }),
-  component: IndustriesPage,
-});
 
 const industries = [
   {
@@ -56,7 +40,7 @@ const industries = [
   { icon: Rocket, t: "Startups & Enterprises", d: "Built to scale with you — MVP to enterprise." },
 ];
 
-function IndustriesPage() {
+export default function IndustriesPage() {
   return (
     <div>
       <section className="relative overflow-hidden">

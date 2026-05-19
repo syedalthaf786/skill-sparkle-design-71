@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { type ReactNode, useEffect, useState } from "react";
 import heroTeam from "@/assets/hero-team.jpg";
 import { Reveal } from "@/components/site/Reveal";
@@ -29,21 +29,6 @@ import {
 } from "lucide-react";
 import video from "@/assets/video.mp4";
 import gif1 from "@/assets/ai1.gif";
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Svms Technologies — Empowering Businesses with Data & Digital Innovation" },
-      {
-        name: "description",
-        content:
-          "AI data annotation, web design, software development, and scalable IT solutions for modern enterprises.",
-      },
-      { property: "og:title", content: "Svms Technologies — Data, AI & IT Solutions" },
-      { property: "og:description", content: "Transforming data into intelligent solutions." },
-    ],
-  }),
-  component: Index,
-});
 
 const services = [
   {
@@ -155,7 +140,7 @@ function TooltipCard({ tooltip, children }: { tooltip: string; children: ReactNo
   );
 }
 
-function Index() {
+export default function Index() {
   return (
     <TooltipProvider>
       <div>
@@ -200,11 +185,11 @@ function Index() {
                 style={{ background: "var(--gradient-brand)", opacity: 0.08, filter: "blur(40px)" }}
               />
               <TooltipCard tooltip="A modern showcase of our team and digital capabilities.">
-                <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-[var(--shadow-elevated)]">
+                <div className="overflow-hidden rounded-3xl border border-border bg_card shadow-[var(--shadow-elevated)]">
                   <video src={video} autoPlay loop muted className="w-full h-full object-cover" />
                 </div>
               </TooltipCard>
-              <div className="absolute -bottom-6 -left-6 hidden rounded-2xl border border-border bg-card p-4 shadow-[var(--shadow-soft)] sm:block">
+              <div className="absolute -bottom-6 -left-6 hidden rounded-2xl border border-border bg_card p-4 shadow-[var(--shadow-soft)] sm:block">
                 <div className="flex items-center gap-3">
                   <div
                     className="grid h-10 w-10 place-items-center rounded-xl"
@@ -213,7 +198,7 @@ function Index() {
                     <CheckCircle2 size={20} className="text-primary-foreground" />
                   </div>
                   <div>
-                    <div className="text-sm font-semibold">99% Accuracy</div>
+                    <div className="text_sm font-semibold">99% Accuracy</div>
                     <div className="text-xs text-muted-foreground">Across 100+ projects</div>
                   </div>
                 </div>
@@ -223,7 +208,7 @@ function Index() {
         </section>
 
         {/* ABOUT */}
-        <section className="border-y border-border bg-surface">
+        <section className="border-y border-border bg_surface">
           <div className="container-x grid gap-12 py-20 lg:grid-cols-2">
             <div>
               <Tooltip>
@@ -308,7 +293,7 @@ function Index() {
         </section>
 
         {/* WHY US */}
-        <section className="bg-surface py-24">
+        <section className="bg_surface py-24">
           <div className="container-x">
             <div className="mx-auto max-w-2xl text-center">
               <span className="eyebrow">Why Choose Us</span>
@@ -383,7 +368,7 @@ function Index() {
               <Reveal key={i.t} delay={idx * 60} className="w-full">
                 <TooltipCard tooltip={i.t}>
                   <div className="card-surface flex items-center gap-4">
-                    <div className="grid h-12 w-12 place-items-center rounded-xl bg-secondary">
+                    <div className="grid h-12 w-12 place-items-center rounded-xl bg_secondary">
                       <i.icon size={22} className="text-primary" />
                     </div>
                     <span className="font-semibold">{i.t}</span>
@@ -395,7 +380,7 @@ function Index() {
         </section>
 
         {/* PROCESS */}
-        <section className="bg-surface py-24 overflow-hidden">
+        <section className="bg_surface py-24 overflow-hidden">
           <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 opacity-70">
             <svg
               viewBox="0 0 1440 160"
@@ -462,14 +447,14 @@ function Index() {
                         <div className="relative flex flex-col items-center text-center">
                           {topLabel ? (
                             <div className="flex flex-col items-center gap-3">
-                              <div className="text-sm font-semibold tracking-tight">{p.t}</div>
+                              <div className="text_sm font-semibold tracking-tight">{p.t}</div>
                               <div className="flex flex-col items-center gap-2">
-                                <span className="inline-flex h-2 w-2 rounded-full bg-primary" />
+                                <span className="inline-flex h-2 w-2 rounded-full bg_primary" />
                                 <span className="block h-8 w-px bg-border" />
                               </div>
                             </div>
                           ) : null}
-                          <div className="relative z-10 flex h-24 w-24 items-center justify-center rounded-full border border-border bg-card shadow-sm">
+                          <div className="relative z-10 flex h-24 w-24 items-center justify-center rounded-full border border-border bg_card shadow-sm">
                             <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary to-violet-700 text-sm font-semibold text-white shadow-inner">
                               Step {i + 1}
                             </div>
@@ -478,9 +463,9 @@ function Index() {
                             <div className="flex flex-col items-center gap-3">
                               <div className="flex flex-col items-center gap-2">
                                 <span className="block h-8 w-px bg-border" />
-                                <span className="inline-flex h-2 w-2 rounded-full bg-primary" />
+                                <span className="inline-flex h-2 w-2 rounded-full bg_primary" />
                               </div>
-                              <div className="text-sm font-semibold tracking-tight">{p.t}</div>
+                              <div className="text_sm font-semibold tracking-tight">{p.t}</div>
                             </div>
                           ) : null}
                           <p className="mt-3 max-w-[12rem] text-sm text-muted-foreground">{p.d}</p>
@@ -497,7 +482,7 @@ function Index() {
         {/* CTA */}
         <section className="container-x pb-24">
           <TooltipCard tooltip="Reach out to our team for AI, web, or software project support.">
-            <div className="overflow-hidden rounded-3xl border border-border bg-card p-10 text-center md:p-16">
+            <div className="overflow-hidden rounded-3xl border border-border bg_card p-10 text-center md:p-16">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <span className="eyebrow cursor-help">Get In Touch</span>

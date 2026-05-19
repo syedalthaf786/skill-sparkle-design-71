@@ -1,16 +1,8 @@
-import { QueryClient } from "@tanstack/react-query";
-import { createRouter } from "@tanstack/react-router";
-import { routeTree } from "./routeTree.gen";
+// Since we're using react-router-dom, we don't need a complex router setup
+// This file is kept for compatibility but simplified
 
 export const getRouter = () => {
-  const queryClient = new QueryClient();
-
-  const router = createRouter({
-    routeTree,
-    context: { queryClient },
-    scrollRestoration: true,
-    defaultPreloadStaleTime: 0,
-  });
-
-  return router;
+  // In a real app with react-router-dom, routing is handled in main.tsx
+  // This function returns a placeholder
+  return null;
 };

@@ -1,52 +1,29 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { useState } from "react";
 
-export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      {
-        title: "Contact — Let's Build Something Amazing | NovaStack",
-      },
-      {
-        name: "description",
-        content: "Have a project idea or business requirement? Reach out to our team today.",
-      },
-      {
-        property: "og:title",
-        content: "Contact NovaStack",
-      },
-      {
-        property: "og:description",
-        content: "Let's build something amazing together.",
-      },
-    ],
-  }),
-  component: ContactPage,
-});
-
-const faqs = [
-  {
-    q: "Do you support large-scale annotation projects?",
-    a: "Yes, we handle scalable AI data projects with quality assurance processes.",
-  },
-  {
-    q: "Do you create custom websites?",
-    a: "Yes, we develop fully customized and responsive websites tailored to your brand.",
-  },
-  {
-    q: "What technologies do you use?",
-    a: "Modern stacks including React, Python, Flask, AI/ML frameworks, cloud platforms, and databases.",
-  },
-  {
-    q: "Do you provide ongoing support?",
-    a: "Yes, we provide maintenance and technical support services after launch.",
-  },
-];
-
-function ContactPage() {
+export default function ContactPage() {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const faqs = [
+    {
+      q: "Do you support large-scale annotation projects?",
+      a: "Yes, we handle scalable AI data projects with quality assurance processes.",
+    },
+    {
+      q: "Do you create custom websites?",
+      a: "Yes, we develop fully customized and responsive websites tailored to your brand.",
+    },
+    {
+      q: "What technologies do you use?",
+      a: "Modern stacks including React, Python, Flask, AI/ML frameworks, cloud platforms, and databases.",
+    },
+    {
+      q: "Do you provide ongoing support?",
+      a: "Yes, we provide maintenance and technical support services after launch.",
+    },
+  ];
 
   // =========================
   // FORM SUBMIT
@@ -97,7 +74,6 @@ function ContactPage() {
 We are interested in your services and would like to discuss a project requirement. Please get back to us with more details.
 
 Thank you.
-,
 
 New Contact Form Submission
 

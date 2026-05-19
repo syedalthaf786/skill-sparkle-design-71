@@ -1,24 +1,9 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { Target, Eye, Heart, ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
 import gif from "@/assets/ai.gif";
-export const Route = createFileRoute("/about")({
-  head: () => ({
-    meta: [
-      { title: "About — Svms Technologies" },
-      {
-        name: "description",
-        content:
-          "We are a technology-focused company providing reliable Data Services and IT Solutions worldwide.",
-      },
-      { property: "og:title", content: "About Svms Technologies" },
-      { property: "og:description", content: "Innovation, accuracy, and technical expertise." },
-    ],
-  }),
-  component: AboutPage,
-});
 
-function AboutPage() {
+export default function AboutPage() {
   return (
     <div>
       <section className="relative overflow-hidden">
