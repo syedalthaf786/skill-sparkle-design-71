@@ -3,6 +3,7 @@ import { ArrowRight, Briefcase, X, Send } from "lucide-react";
 
 import { Reveal } from "@/components/site/Reveal";
 import { useState } from "react";
+import { supabase } from "@/lib/supabase";
 
 const roles = [
   {
@@ -62,6 +63,35 @@ export default function CareersPage() {
 
     // WEB3FORMS KEY
     formData.append("access_key", "e4d6cdd5-7ee4-41ae-8c25-679fbcb4e3c8");
+
+    // SAVE TO LOCAL STORAGE FOR ADMIN (always save as backup)
+    const submission = {
+      id: Date.now().toString(),
+      role: selectedRole,
+      name: formData.get("name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      resume: formData.get("resume"),
+      message: formData.get("message"),
+      date: new Date().toISOString(),
+    };
+
+    const existing = JSON.parse(localStorage.getItem("careersSubmissions") || "[]");
+    localStorage.setItem("careersSubmissions", JSON.stringify([submission, ...existing]));
+
+    // SAVE TO SUPABASE (may fail if table doesn't exist)
+    try {
+      await supabase.from("careers_submissions").insert({
+        role: selectedRole,
+        name: formData.get("name"),
+        email: formData.get("email"),
+        phone: formData.get("phone"),
+        resume: formData.get("resume"),
+        message: formData.get("message"),
+      });
+    } catch (err) {
+      console.warn("Supabase save failed, data saved to localStorage only:", err);
+    }
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {

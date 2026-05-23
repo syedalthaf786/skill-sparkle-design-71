@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { useState } from "react";
+import { supabase } from "@/lib/supabase";
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
@@ -49,7 +50,7 @@ export default function ContactPage() {
     const service = formData.get("service");
     const message = formData.get("message");
 
-    // SAVE TO LOCAL STORAGE FOR ADMIN
+    // SAVE TO LOCAL STORAGE FOR ADMIN (always save as backup)
     const submission = {
       id: Date.now().toString(),
       name,
@@ -62,6 +63,19 @@ export default function ContactPage() {
 
     const existing = JSON.parse(localStorage.getItem("contactSubmissions") || "[]");
     localStorage.setItem("contactSubmissions", JSON.stringify([submission, ...existing]));
+
+    // SAVE TO SUPABASE (may fail if table doesn't exist)
+    try {
+      await supabase.from("contact_submissions").insert({
+        name,
+        email,
+        phone,
+        service,
+        message,
+      });
+    } catch (err) {
+      console.warn("Supabase save failed, data saved to localStorage only:", err);
+    }
 
     // =========================
     // WEB3FORMS ACCESS KEY

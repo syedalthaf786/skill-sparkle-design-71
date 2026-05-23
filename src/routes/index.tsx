@@ -147,14 +147,52 @@ export default function Index() {
   const [ads, setAds] = useState<Array<{ id: string; url: string }>>([{ id: "1", url: "/ad-banner.jpg" }]);
   const [currentAdIndex, setCurrentAdIndex] = useState(0);
 
+  // Allow reopening popup via URL param for testing: ?popup=true
   useEffect(() => {
-    const savedAds = localStorage.getItem("popupAds");
-    if (savedAds) {
-      try {
-        const parsed = JSON.parse(savedAds);
-        if (parsed.length > 0) setAds(parsed);
-      } catch { /* use defaults */ }
+    if (new URLSearchParams(window.location.search).get("popup") === "true") {
+      sessionStorage.removeItem("popupShown");
     }
+  }, []);
+
+  useEffect(() => {
+    const loadAds = async () => {
+      const savedAds = localStorage.getItem("popupAds");
+      const cachedTime = localStorage.getItem("popupAdsTime");
+      const now = Date.now();
+      const cacheAge = cachedTime ? now - parseInt(cachedTime) : Infinity;
+      
+      // Use cache only if less than 5 minutes old
+      if (savedAds && cacheAge < 5 * 60 * 1000) {
+        try {
+          const parsed = JSON.parse(savedAds);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setAds(parsed);
+          }
+        } catch { /* fallback to supabase */ }
+      }
+
+      // Always try Supabase for fresh data
+      try {
+        const { data, error } = await supabase
+          .from("popup_ads")
+          .select("id, url, title")
+          .eq("active", true)
+          .order("created_at", { ascending: true });
+        
+        if (!error && data && data.length > 0) {
+          setAds(data);
+          localStorage.setItem("popupAds", JSON.stringify(data));
+          localStorage.setItem("popupAdsTime", Date.now().toString());
+        } else if (savedAds && cacheAge >= 5 * 60 * 1000) {
+          // Cache expired and no data from Supabase, clear cache
+          localStorage.removeItem("popupAds");
+          localStorage.removeItem("popupAdsTime");
+        }
+      } catch (err) {
+        console.warn("Could not load ads from Supabase:", err);
+      }
+    };
+    loadAds();
   }, []);
 
   useEffect(() => {
@@ -166,7 +204,7 @@ export default function Index() {
   }, []);
 
   useEffect(() => {
-    if (showPopup && ads.length > 1) {
+    if (showPopup && ads.length > 0) {
       const interval = setInterval(() => {
         setCurrentAdIndex((prev) => (prev + 1) % ads.length);
       }, 3000);

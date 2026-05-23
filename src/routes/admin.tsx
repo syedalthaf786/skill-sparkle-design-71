@@ -15,6 +15,17 @@ interface ContactSubmission {
   date: string;
 }
 
+interface CareersSubmission {
+  id: string;
+  role: string;
+  name: string;
+  email: string;
+  phone: string;
+  resume: string;
+  message: string;
+  date: string;
+}
+
 interface AdItem {
   id: string;
   url: string;
@@ -24,41 +35,114 @@ export default function Admin() {
   const [ads, setAds] = useState<AdItem[]>([{ id: "1", url: defaultAdUrl }]);
   const [saved, setSaved] = useState(false);
   const [submissions, setSubmissions] = useState<ContactSubmission[]>([]);
+  const [careersSubmissions, setCareersSubmissions] = useState<CareersSubmission[]>([]);
   const fileInputRefs = useRef<Record<string, HTMLInputElement>>({});
 
   useEffect(() => {
     const loadAds = async () => {
-      const { data, error } = await supabase
-        .from("ads")
-        .select("id, url")
-        .order("created_at", { ascending: true });
-      if (!error && data && data.length > 0) {
-        setAds(data.map((a: { id: string; url: string }) => ({ id: a.id, url: a.url })));
-        sessionStorage.setItem("popupAds", JSON.stringify(data.map((a: { id: string; url: string }) => ({ id: a.id, url: a.url }))));
-      } else {
-        const savedAds = sessionStorage.getItem("popupAds");
+      // Load directly from Supabase (admin needs fresh data)
+      try {
+        const { data, error } = await supabase
+          .from("popup_ads")
+          .select("id, url")
+          .eq("active", true)
+          .order("created_at", { ascending: true });
+        if (!error && data && data.length > 0) {
+          setAds(data);
+          localStorage.setItem("popupAds", JSON.stringify(data));
+        } else if (error) {
+          // Fallback to localStorage if Supabase fails
+          const savedAds = localStorage.getItem("popupAds");
+          if (savedAds) {
+            const parsed = JSON.parse(savedAds);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              setAds(parsed);
+            }
+          }
+        }
+      } catch (err) {
+        console.warn("Could not load ads from Supabase:", err);
+        const savedAds = localStorage.getItem("popupAds");
         if (savedAds) {
-          try { setAds(JSON.parse(savedAds)); } catch { /* use defaults */ }
+          const parsed = JSON.parse(savedAds);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setAds(parsed);
+          }
         }
       }
     };
     loadAds();
 
-    const savedSubmissions = localStorage.getItem("contactSubmissions");
-    if (savedSubmissions) {
-      setSubmissions(JSON.parse(savedSubmissions));
-    }
+    // Load contact submissions from Supabase
+    const loadContactSubmissions = async () => {
+      try {
+        const { data } = await supabase
+          .from("contact_submissions")
+          .select("*")
+          .order("created_at", { ascending: false });
+        if (data) {
+          setSubmissions(data);
+          localStorage.setItem("contactSubmissions", JSON.stringify(data));
+        }
+      } catch (err) {
+        console.warn("Could not load contact submissions:", err);
+        const savedSubmissions = localStorage.getItem("contactSubmissions");
+        if (savedSubmissions) {
+          setSubmissions(JSON.parse(savedSubmissions));
+        }
+      }
+    };
+    loadContactSubmissions();
+
+    // Load careers submissions from Supabase
+    const loadCareersSubmissions = async () => {
+      try {
+        const { data } = await supabase
+          .from("careers_submissions")
+          .select("*")
+          .order("created_at", { ascending: false });
+        if (data) {
+          setCareersSubmissions(data);
+          localStorage.setItem("careersSubmissions", JSON.stringify(data));
+        }
+      } catch (err) {
+        console.warn("Could not load careers submissions:", err);
+        const savedCareersSubmissions = localStorage.getItem("careersSubmissions");
+        if (savedCareersSubmissions) {
+          setCareersSubmissions(JSON.parse(savedCareersSubmissions));
+        }
+      }
+    };
+    loadCareersSubmissions();
   }, []);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // Try Supabase Storage first, fallback to base64
+    try {
+      const fileName = `popup-ads/${id}-${Date.now()}`;
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from("popup-ads")
+        .upload(fileName, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: urlData } = supabase.storage.from("popup-ads").getPublicUrl(fileName);
+      if (urlData?.publicUrl) {
+        updateAdUrl(id, urlData.publicUrl);
+        return;
+      }
+    } catch (storageErr: any) {
+      console.warn("Storage upload failed, using base64 fallback:", storageErr.message);
+    }
+
+    // Fallback: Use base64 encoding
     const reader = new FileReader();
     reader.onload = () => {
       const base64 = reader.result as string;
-      const newAds = ads.map((ad) => (ad.id === id ? { ...ad, url: base64 } : ad));
-      setAds(newAds);
+      updateAdUrl(id, base64);
     };
     reader.readAsDataURL(file);
   };
@@ -81,29 +165,80 @@ export default function Admin() {
   };
 
   const handleSave = async () => {
-    await supabase.from("ads").delete().neq("id", "");
-    const rows = ads.map((ad) => ({ id: ad.id, url: ad.url }));
-    if (rows.length > 0) {
-      await supabase.from("ads").insert(rows);
+    try {
+      console.log("Saving ads to popup_ads table:", ads);
+      
+      // First check if we can read (table exists)
+      const { data: testData, error: testError } = await supabase.from("popup_ads").select("*").limit(1);
+      if (testError) {
+        console.error("Table read error:", testError);
+        alert("Database table error: " + testError.message + "\n\nEnsure table 'popup_ads' exists with columns: id, url, active");
+        return;
+      }
+      
+      // Delete existing records
+      const { error: deleteError } = await supabase.from("popup_ads").delete().neq("id", "");
+      if (deleteError) {
+        console.warn("Delete warning:", deleteError);
+      }
+      
+      // Insert new records
+      const rows = ads.map((ad) => ({ 
+        id: ad.id, 
+        url: ad.url, 
+        active: ad.active !== undefined ? ad.active : true 
+      }));
+      
+      if (rows.length > 0) {
+        const { error: insertError } = await supabase.from("popup_ads").insert(rows);
+        if (insertError) {
+          console.error("Insert error:", insertError);
+          throw insertError;
+        }
+      }
+      
+      // Always save localStorage
+      localStorage.setItem("popupAds", JSON.stringify(ads));
+      localStorage.removeItem("popupAdsTime");
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch (err: any) {
+      console.error("Save failed:", err);
+      localStorage.setItem("popupAds", JSON.stringify(ads));
+      alert("Error saving to database: " + (err.message || "Unknown error") + ". Saved locally.");
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
     }
-    sessionStorage.setItem("popupAds", JSON.stringify(ads));
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
   };
 
   const handleReset = async () => {
-    const defaultAds = [{ id: "1", url: defaultAdUrl }];
-    setAds(defaultAds);
-    await supabase.from("ads").delete().neq("id", "");
-    await supabase.from("ads").insert(defaultAds);
-    sessionStorage.setItem("popupAds", JSON.stringify(defaultAds));
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+    try {
+      const defaultAds = [{ id: "1", url: defaultAdUrl }];
+      setAds(defaultAds);
+      await supabase.from("popup_ads").delete().neq("id", "");
+      await supabase.from("popup_ads").insert(defaultAds);
+      localStorage.setItem("popupAds", JSON.stringify(defaultAds));
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch (err: any) {
+      alert("Failed to reset: " + (err.message || "Unknown error"));
+    }
   };
 
-  const clearSubmissions = () => {
-    localStorage.setItem("contactSubmissions", "[]");
-    setSubmissions([]);
+  const clearSubmissions = async () => {
+    if (confirm("Delete all contact submissions?")) {
+      await supabase.from("contact_submissions").delete().neq("id", "");
+      localStorage.setItem("contactSubmissions", "[]");
+      setSubmissions([]);
+    }
+  };
+
+  const clearCareersSubmissions = async () => {
+    if (confirm("Delete all careers submissions?")) {
+      await supabase.from("careers_submissions").delete().neq("id", "");
+      localStorage.setItem("careersSubmissions", "[]");
+      setCareersSubmissions([]);
+    }
   };
 
   return (
@@ -161,12 +296,12 @@ export default function Admin() {
                       />
                       <input
                         type="text"
-                        value={ad.url.startsWith("data:") ? "" : ad.url}
+                        value={ad.url}
                         onChange={(e) => updateAdUrl(ad.id, e.target.value)}
                         placeholder="Or enter image URL"
                         className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
                       />
-                    </div>
+</div>
 
                     {ad.url && (
                       <div className="mt-3 rounded-lg overflow-hidden">
@@ -178,6 +313,11 @@ export default function Admin() {
                             e.currentTarget.src = "https://placehold.co/400x200/png?text=Ad+Preview";
                           }}
                         />
+                      </div>
+                    )}
+                    {!ad.url && (
+                      <div className="mt-3 rounded-lg overflow-hidden bg-muted flex items-center justify-center h-40">
+                        <span className="text-sm text-muted-foreground">No image selected</span>
                       </div>
                     )}
                   </div>
@@ -257,6 +397,56 @@ export default function Admin() {
                       <div className="text-sm">
                         <span className="font-medium text-foreground">Message:</span>
                         <p className="mt-1">{sub.message}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="border-t border-border pt-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold">Careers Applications</h2>
+                {careersSubmissions.length > 0 && (
+                  <button onClick={clearCareersSubmissions} className="text-sm text-red-500 hover:underline">
+                    Clear All
+                  </button>
+                )}
+              </div>
+
+              {careersSubmissions.length === 0 ? (
+                <div className="text-center py-8 text-muted-foreground">
+                  <Inbox size={48} className="mx-auto mb-2 opacity-30" />
+                  <p>No applications yet</p>
+                </div>
+              ) : (
+                <div className="space-y-4 max-h-96 overflow-y-auto">
+                  {careersSubmissions.map((app) => (
+                    <div key={app.id} className="rounded-lg border border-border bg-card p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-semibold">{app.name}</span>
+                        <span className="text-xs text-muted-foreground">
+                          {new Date(app.date).toLocaleString()}
+                        </span>
+                      </div>
+                      <div className="text-sm text-muted-foreground mb-2">
+                        <span className="font-medium text-foreground">Role:</span> {app.role}
+                      </div>
+                      <div className="text-sm text-muted-foreground mb-2">
+                        <span className="font-medium text-foreground">Email:</span> {app.email}
+                      </div>
+                      <div className="text-sm text-muted-foreground mb-2">
+                        <span className="font-medium text-foreground">Phone:</span> {app.phone}
+                      </div>
+                      <div className="text-sm text-muted-foreground mb-2">
+                        <span className="font-medium text-foreground">Resume:</span>{" "}
+                        <a href={app.resume} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                          Link
+                        </a>
+                      </div>
+                      <div className="text-sm">
+                        <span className="font-medium text-foreground">Message:</span>
+                        <p className="mt-1">{app.message}</p>
                       </div>
                     </div>
                   ))}
