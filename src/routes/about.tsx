@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Target, Eye, Heart, ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
-import gif from "@/assets/ai.gif";
+import gif from "@/assets/ai.webp";
 
 export default function AboutPage() {
   return (

@@ -30,7 +30,7 @@ import {
   X,
 } from "lucide-react";
 import video from "@/assets/video.mp4";
-import gif1 from "@/assets/ai1.gif";
+import gif1 from "@/assets/ai1.webp";
 
 const services = [
   {
@@ -228,7 +228,7 @@ export default function Index() {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <span className="eyebrow cursor-help">
-                    <Sparkles size={12} /> Hello! Welcome to Svms Technologies
+                    <Sparkles size={12} className="animate-bounce" /> Hello! Welcome to Svms Technologies
                   </span>
                 </TooltipTrigger>
                 <TooltipContent side="bottom">

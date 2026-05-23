@@ -67,7 +67,7 @@ export default function ContactPage() {
     // WEB3FORMS ACCESS KEY
     // =========================
 
-    formData.append("access_key", "YOUR_WEB3FORMS_ACCESS_KEY");
+    formData.append("access_key", "f2d5e054-38ee-42d9-babd-768e64728afc");
 
     try {
       // EMAIL SEND
@@ -150,7 +150,7 @@ ${message}`;
             {
               icon: Mail,
               t: "Email",
-              d: "svmstechnologies@gmail.com",
+              d: "info@svmstechnologies.com",
             },
             {
               icon: Phone,
