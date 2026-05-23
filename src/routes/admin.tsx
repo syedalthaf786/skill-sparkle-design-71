@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Save, RefreshCw, Upload, X, Inbox } from "lucide-react";
+import { Save, RefreshCw, Upload, X, Inbox, Plus, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 const defaultAdUrl = "/ad-banner.jpg";
 
@@ -14,17 +15,34 @@ interface ContactSubmission {
   date: string;
 }
 
+interface AdItem {
+  id: string;
+  url: string;
+}
+
 export default function Admin() {
-  const [adUrl, setAdUrl] = useState(defaultAdUrl);
+  const [ads, setAds] = useState<AdItem[]>([{ id: "1", url: defaultAdUrl }]);
   const [saved, setSaved] = useState(false);
   const [submissions, setSubmissions] = useState<ContactSubmission[]>([]);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRefs = useRef<Record<string, HTMLInputElement>>({});
 
   useEffect(() => {
-    const savedUrl = localStorage.getItem("popupAdUrl");
-    if (savedUrl) {
-      setAdUrl(savedUrl);
-    }
+    const loadAds = async () => {
+      const { data, error } = await supabase
+        .from("ads")
+        .select("id, url")
+        .order("created_at", { ascending: true });
+      if (!error && data && data.length > 0) {
+        setAds(data.map((a: { id: string; url: string }) => ({ id: a.id, url: a.url })));
+        sessionStorage.setItem("popupAds", JSON.stringify(data.map((a: { id: string; url: string }) => ({ id: a.id, url: a.url }))));
+      } else {
+        const savedAds = sessionStorage.getItem("popupAds");
+        if (savedAds) {
+          try { setAds(JSON.parse(savedAds)); } catch { /* use defaults */ }
+        }
+      }
+    };
+    loadAds();
 
     const savedSubmissions = localStorage.getItem("contactSubmissions");
     if (savedSubmissions) {
@@ -32,37 +50,53 @@ export default function Admin() {
     }
   }, []);
 
-  useEffect(() => {
-    const savedSubmissions = localStorage.getItem("contactSubmissions");
-    if (savedSubmissions) {
-      setSubmissions(JSON.parse(savedSubmissions));
-    }
-  }, []);
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     const reader = new FileReader();
     reader.onload = () => {
       const base64 = reader.result as string;
-      setAdUrl(base64);
+      const newAds = ads.map((ad) => (ad.id === id ? { ...ad, url: base64 } : ad));
+      setAds(newAds);
     };
     reader.readAsDataURL(file);
   };
 
-  const handleSave = () => {
-    localStorage.setItem("popupAdUrl", adUrl);
+  const addAd = () => {
+    setAds([...ads, { id: Date.now().toString(), url: "" }]);
+  };
+
+  const removeAd = (id: string) => {
+    if (ads.length <= 1) {
+      alert("At least one ad is required");
+      return;
+    }
+    setAds(ads.filter((ad) => ad.id !== id));
+  };
+
+  const updateAdUrl = (id: string, url: string) => {
+    const newAds = ads.map((ad) => (ad.id === id ? { ...ad, url } : ad));
+    setAds(newAds);
+  };
+
+  const handleSave = async () => {
+    await supabase.from("ads").delete().neq("id", "");
+    const rows = ads.map((ad) => ({ id: ad.id, url: ad.url }));
+    if (rows.length > 0) {
+      await supabase.from("ads").insert(rows);
+    }
+    sessionStorage.setItem("popupAds", JSON.stringify(ads));
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   };
 
-  const handleReset = () => {
-    setAdUrl(defaultAdUrl);
-    localStorage.setItem("popupAdUrl", defaultAdUrl);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
+  const handleReset = async () => {
+    const defaultAds = [{ id: "1", url: defaultAdUrl }];
+    setAds(defaultAds);
+    await supabase.from("ads").delete().neq("id", "");
+    await supabase.from("ads").insert(defaultAds);
+    sessionStorage.setItem("popupAds", JSON.stringify(defaultAds));
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   };
@@ -71,8 +105,6 @@ export default function Admin() {
     localStorage.setItem("contactSubmissions", "[]");
     setSubmissions([]);
   };
-
-  const previewImage = adUrl || defaultAdUrl;
 
   return (
     <>
@@ -88,34 +120,72 @@ export default function Admin() {
       </header>
       <div className="container-x py-12">
         <div className="mx-auto max-w-2xl">
-          <h1 className="text-3xl font-bold mb-6">Popup Ad Admin</h1>
+          <h1 className="text-3xl font-bold mb-6">Popup Ad Admin (Carousel)</h1>
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-2">Upload Ad Image</label>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-primary file:text-primary-foreground hover:file:opacity-90"
-              />
-              <p className="text-xs text-muted-foreground mt-1">
-                Click to upload an image file (JPG, PNG, GIF, etc.)
-              </p>
-            </div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-sm font-medium">Ad Images</label>
+                <button
+                  onClick={addAd}
+                  className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+                >
+                  <Plus size={14} /> Add Ad
+                </button>
+              </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-2">Or Enter Image URL</label>
-              <input
-                type="text"
-                value={adUrl.startsWith("data:") ? "" : adUrl}
-                onChange={(e) => setAdUrl(e.target.value)}
-                placeholder="Enter image URL (e.g., /my-ad.jpg or https://example.com/ad.jpg)"
-                className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-              <p className="text-xs text-muted-foreground mt-1">
-                Enter a path like <code>/my-ad.jpg</code> (place image in public folder) or full URL
+              <div className="space-y-4">
+                {ads.map((ad, index) => (
+                  <div key={ad.id} className="rounded-lg border border-border bg-card p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium">Ad #{index + 1}</span>
+                      {ads.length > 1 && (
+                        <button
+                          onClick={() => removeAd(ad.id)}
+                          className="text-red-500 hover:text-red-700"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      )}
+                    </div>
+
+                    <div className="space-y-2">
+                      <input
+                        ref={(el) => {
+                          if (el) fileInputRefs.current[ad.id] = el;
+                        }}
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleFileChange(e, ad.id)}
+                        className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
+                      />
+                      <input
+                        type="text"
+                        value={ad.url.startsWith("data:") ? "" : ad.url}
+                        onChange={(e) => updateAdUrl(ad.id, e.target.value)}
+                        placeholder="Or enter image URL"
+                        className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
+                      />
+                    </div>
+
+                    {ad.url && (
+                      <div className="mt-3 rounded-lg overflow-hidden">
+                        <img
+                          src={ad.url}
+                          alt={`Ad ${index + 1} preview`}
+                          className="w-full max-h-40 object-cover"
+                          onError={(e) => {
+                            e.currentTarget.src = "https://placehold.co/400x200/png?text=Ad+Preview";
+                          }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              <p className="text-xs text-muted-foreground mt-2">
+                Add multiple ads to create a carousel. Each ad will rotate automatically.
               </p>
             </div>
 
@@ -141,28 +211,12 @@ export default function Admin() {
             )}
 
             <div className="border-t border-border pt-4">
-              <h2 className="text-sm font-medium mb-2">Preview</h2>
-              <div className="relative max-w-sm">
-                <div className="relative rounded-lg shadow-2xl overflow-hidden">
-                  <img
-                    src={previewImage}
-                    alt="Ad preview"
-                    className="w-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.src = "https://placehold.co/400x250/png?text=Ad+Preview";
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="border-t border-border pt-4">
-              <h2 className="text-sm font-medium mb-2">How to Add Your Own Ad</h2>
+              <h2 className="text-sm font-medium mb-2">How It Works</h2>
               <ol className="text-sm text-muted-foreground space-y-1 list-decimal list-inside">
-                <li>Upload an image using the file picker above, or enter an image URL</li>
-                <li>Click Save to store the image in your browser</li>
-                <li>Refresh the home page to see the popup</li>
-                <li>The popup shows once per session to each visitor</li>
+                <li>Upload images or enter URLs for each ad</li>
+                <li>Click Save to store them in your browser</li>
+                <li>Ads will rotate automatically in a carousel popup</li>
+                <li>Popup shows once per session to each visitor</li>
               </ol>
             </div>
 
@@ -170,10 +224,7 @@ export default function Admin() {
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-semibold">Contact Form Submissions</h2>
                 {submissions.length > 0 && (
-                  <button
-                    onClick={clearSubmissions}
-                    className="text-sm text-red-500 hover:underline"
-                  >
+                  <button onClick={clearSubmissions} className="text-sm text-red-500 hover:underline">
                     Clear All
                   </button>
                 )}

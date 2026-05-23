@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { type ReactNode, useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
 import heroTeam from "@/assets/hero-team.jpg";
 import { Reveal } from "@/components/site/Reveal";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -143,12 +144,16 @@ function TooltipCard({ tooltip, children }: { tooltip: string; children: ReactNo
 
 export default function Index() {
   const [showPopup, setShowPopup] = useState(false);
-  const [adImageUrl, setAdImageUrl] = useState("/ad-banner.jpg");
+  const [ads, setAds] = useState<Array<{ id: string; url: string }>>([{ id: "1", url: "/ad-banner.jpg" }]);
+  const [currentAdIndex, setCurrentAdIndex] = useState(0);
 
   useEffect(() => {
-    const savedAdUrl = localStorage.getItem("popupAdUrl");
-    if (savedAdUrl) {
-      setAdImageUrl(savedAdUrl);
+    const savedAds = localStorage.getItem("popupAds");
+    if (savedAds) {
+      try {
+        const parsed = JSON.parse(savedAds);
+        if (parsed.length > 0) setAds(parsed);
+      } catch { /* use defaults */ }
     }
   }, []);
 
@@ -160,10 +165,21 @@ export default function Index() {
     }
   }, []);
 
+  useEffect(() => {
+    if (showPopup && ads.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentAdIndex((prev) => (prev + 1) % ads.length);
+      }, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [showPopup, ads.length]);
+
   const handleClose = () => {
     setShowPopup(false);
     sessionStorage.setItem("popupShown", "true");
   };
+
+  const currentAdUrl = ads[currentAdIndex]?.url || "/ad-banner.jpg";
 
   return (
     <TooltipProvider>
@@ -178,19 +194,32 @@ export default function Index() {
               >
                 <X size={18} />
               </button>
-              <div className="overflow-hidden rounded-lg shadow-2xl">
-                <img
-                  src={adImageUrl}
-                  alt="Special Offer"
-                  className="w-full object-cover"
-                  onError={(e) => {
-                    e.currentTarget.src = "https://placehold.co/600x400/png?text=Special+Offer";
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        )}
+<div className="overflow-hidden rounded-lg shadow-2xl">
+                 <img
+                   src={currentAdUrl}
+                   alt="Special Offer"
+                   className="w-full object-cover transition-opacity duration-500"
+                   onError={(e) => {
+                     e.currentTarget.src = "https://placehold.co/600x400/png?text=Special+Offer";
+                   }}
+                 />
+               </div>
+               {ads.length > 1 && (
+                 <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+                   {ads.map((_, i) => (
+                     <button
+                       key={i}
+                       onClick={() => setCurrentAdIndex(i)}
+                       className={`h-2 w-2 rounded-full transition ${
+                         i === currentAdIndex ? "bg-white" : "bg-white/50"
+                       }`}
+                     />
+                   ))}
+                 </div>
+               )}
+             </div>
+           </div>
+         )}
         {/* HERO */}
         <section className="relative overflow-hidden">
           <div className="hero-glow absolute inset-0 -z-10" />
