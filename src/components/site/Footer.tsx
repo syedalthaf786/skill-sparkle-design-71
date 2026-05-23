@@ -14,10 +14,16 @@ export function Footer() {
             Transforming data into intelligent solutions. Your trusted technology partner.
           </p>
           <div className="mt-5 flex gap-2">
-            {[Linkedin, Instagram, Facebook].map((Icon, i) => (
+            {[
+              { Icon: Linkedin, href: "https://www.linkedin.com/company/svms-technologies/" },
+              { Icon: Instagram, href: "https://www.instagram.com/svms_technologies?utm_source=qr&igsh=MTRjcmszMGs5dDE5OA==" },
+              { Icon: Facebook, href: "https://www.facebook.com/share/18gTRuGN7i/" },
+            ].map(({ Icon, href }, i) => (
               <a
                 key={i}
-                href="#"
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="grid h-9 w-9 place-items-center rounded-full border border-border text-muted-foreground transition hover:border-primary hover:text-primary"
               >
                 <Icon size={16} />
