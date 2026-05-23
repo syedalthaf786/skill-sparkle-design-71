@@ -9,7 +9,7 @@ import { OfflinePage } from "@/components/site/OfflinePage";
 
 function NotFoundComponent() {
   const navigate = useNavigate();
-  
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
@@ -18,10 +18,7 @@ function NotFoundComponent() {
         <p className="mt-2 text-sm text-muted-foreground">
           The page you're looking for doesn't exist.
         </p>
-        <button 
-          onClick={() => navigate("/")} 
-          className="btn-primary mt-6"
-        >
+        <button onClick={() => navigate("/")} className="btn-primary mt-6">
           Go home
         </button>
       </div>
@@ -31,7 +28,7 @@ function NotFoundComponent() {
 
 function ErrorComponent({ error }: { error: Error }) {
   const navigate = useNavigate();
-  
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
@@ -53,12 +50,8 @@ function ErrorComponent({ error }: { error: Error }) {
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head>
-        {/* Head content will be handled by individual routes */}
-      </head>
-      <body>
-        {children}
-      </body>
+      <head>{/* Head content will be handled by individual routes */}</head>
+      <body>{children}</body>
     </html>
   );
 }
@@ -68,7 +61,7 @@ function RootComponent({ children }: { children: React.ReactNode }) {
   const [showLoader, setShowLoader] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowLoader(false), 800);
+    const timer = setTimeout(() => setShowLoader(false), 2500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -83,9 +76,7 @@ function RootComponent({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      <main className="flex-1">
-        {children}
-      </main>
+      <main className="flex-1">{children}</main>
       <Footer />
     </div>
   );

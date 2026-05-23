@@ -49,6 +49,20 @@ export default function ContactPage() {
     const service = formData.get("service");
     const message = formData.get("message");
 
+    // SAVE TO LOCAL STORAGE FOR ADMIN
+    const submission = {
+      id: Date.now().toString(),
+      name,
+      email,
+      phone,
+      service,
+      message,
+      date: new Date().toISOString(),
+    };
+
+    const existing = JSON.parse(localStorage.getItem("contactSubmissions") || "[]");
+    localStorage.setItem("contactSubmissions", JSON.stringify([submission, ...existing]));
+
     // =========================
     // WEB3FORMS ACCESS KEY
     // =========================

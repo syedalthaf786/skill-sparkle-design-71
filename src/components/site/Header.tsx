@@ -28,9 +28,10 @@ export function Header() {
               key={n.to}
               to={n.to}
               end={n.to === "/"}
-              className={({ isActive }) => 
-                `rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition hover:text-foreground ${isActive ? "text-primary bg-secondary" : ""}`}
-              >
+              className={({ isActive }) =>
+                `rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition hover:text-foreground ${isActive ? "text-primary bg-secondary" : ""}`
+              }
+            >
               {n.label}
             </NavLink>
           ))}

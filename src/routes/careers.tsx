@@ -93,27 +93,27 @@ export default function CareersPage() {
     setLoading(false);
   };
   const roles = [
-  {
-    t: "Frontend Developer",
-    loc: "Remote",
-    type: "Full Time",
-  },
-  {
-    t: "Backend Engineer",
-    loc: "Hyderabad",
-    type: "Full Time",
-  },
-  {
-    t: "UI/UX Designer",
-    loc: "Bangalore",
-    type: "Internship",
-  },
-  {
-    t: "AI Engineer",
-    loc: "Remote",
-    type: "Contract",
-  },
-];
+    {
+      t: "Frontend Developer",
+      loc: "Remote",
+      type: "Full Time",
+    },
+    {
+      t: "Backend Engineer",
+      loc: "Hyderabad",
+      type: "Full Time",
+    },
+    {
+      t: "UI/UX Designer",
+      loc: "Bangalore",
+      type: "Internship",
+    },
+    {
+      t: "AI Engineer",
+      loc: "Remote",
+      type: "Contract",
+    },
+  ];
 
   return (
     <div>
@@ -143,7 +143,7 @@ export default function CareersPage() {
               delay={i * 80}
               className={`flex flex-wrap items-center justify-between gap-4 p-6 transition-all duration-300 hover:bg-white/5 md:p-8 ${
                 i !== 0 ? "border-t border-white/10" : ""
-          }`}
+              }`}
             >
               <div className="flex items-center gap-4">
                 <div className="grid h-14 w-14 place-items-center rounded-2xl bg-emerald-300 shadow-xl shadow-emerald-400/20 transition-all duration-300 hover:scale-110">

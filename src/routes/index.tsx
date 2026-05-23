@@ -26,6 +26,7 @@ import {
   Truck,
   Rocket,
   Store,
+  X,
 } from "lucide-react";
 import video from "@/assets/video.mp4";
 import gif1 from "@/assets/ai1.gif";
@@ -141,9 +142,55 @@ function TooltipCard({ tooltip, children }: { tooltip: string; children: ReactNo
 }
 
 export default function Index() {
+  const [showPopup, setShowPopup] = useState(false);
+  const [adImageUrl, setAdImageUrl] = useState("/ad-banner.jpg");
+
+  useEffect(() => {
+    const savedAdUrl = localStorage.getItem("popupAdUrl");
+    if (savedAdUrl) {
+      setAdImageUrl(savedAdUrl);
+    }
+  }, []);
+
+  useEffect(() => {
+    const popupShown = sessionStorage.getItem("popupShown");
+    if (!popupShown) {
+      const timer = setTimeout(() => setShowPopup(true), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  const handleClose = () => {
+    setShowPopup(false);
+    sessionStorage.setItem("popupShown", "true");
+  };
+
   return (
     <TooltipProvider>
       <div>
+        {showPopup && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+            <div className="relative max-w-lg w-full animate-in fade-in zoom-in duration-300">
+              <button
+                onClick={handleClose}
+                className="absolute -top-2 -right-2 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white text-foreground shadow-lg hover:bg-muted transition-colors"
+                aria-label="Close popup"
+              >
+                <X size={18} />
+              </button>
+              <div className="overflow-hidden rounded-lg shadow-2xl">
+                <img
+                  src={adImageUrl}
+                  alt="Special Offer"
+                  className="w-full object-cover"
+                  onError={(e) => {
+                    e.currentTarget.src = "https://placehold.co/600x400/png?text=Special+Offer";
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        )}
         {/* HERO */}
         <section className="relative overflow-hidden">
           <div className="hero-glow absolute inset-0 -z-10" />

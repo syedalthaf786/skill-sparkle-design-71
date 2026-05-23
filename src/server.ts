@@ -18,9 +18,9 @@ async function getServerEntry(): Promise<ServerEntry> {
           {
             status: 200,
             headers: { "content-type": "text/html; charset=utf-8" },
-          }
+          },
         );
-      }
+      },
     });
   }
   return serverEntryPromise;
