@@ -4,7 +4,7 @@ const BASE_URL = "";
 
 // This is a simplified sitemap generator - in a real app you'd want to generate this dynamically
 export default function SitemapXml() {
-  const paths = ["/", "/about", "/services", "/industries", "/careers", "/contact"];
+  const paths = ["/", "/about", "/services", "/seo", "/industries", "/careers", "/contact"];
   const urls = paths
     .map((p) => `  <url><loc>${BASE_URL}${p}</loc><changefreq>weekly</changefreq></url>`)
     .join("\n");
