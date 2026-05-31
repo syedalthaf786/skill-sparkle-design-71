@@ -57,10 +57,10 @@ export function Footer() {
             <li className="flex items-start gap-2">
               <Mail size={14} className="mt-1 text-primary" />
               <a href="mailto:svmstechnologies@gmail.com" target="_blank" rel="noopener noreferrer">
-                svmstechnologies@gmail.com
+                info@svmstechnologies.com
               </a>
-            </li>
-            <li className="flex items-start gap-2">
+            </li>href={href}
+            <li clrel=\"noopener noreferrer\"assName="flex items-start gap-2">
               <Phone size={14} className="mt-1 text-primary" />{" "}
               <a href="tel:+918328210998" target="_blank" rel="noopener noreferrer">
                 +91 83282 10998
@@ -74,7 +74,7 @@ export function Footer() {
       </div>
       <div className="border-t border-border">
         <div className="container-x flex flex-col items-center justify-between gap-2 py-5 text-xs text-muted-foreground md:flex-row">
-          <p>© 2026 NovaStack Technologies. All Rights Reserved.</p>
+          <p>© 2026 SVMS Technologies. All Rights Reserved.</p>
           <span>
             design & development by{" "}
             <a href="https://www.designdelivergrow.store" target="_blank" rel="noopener noreferrer">
