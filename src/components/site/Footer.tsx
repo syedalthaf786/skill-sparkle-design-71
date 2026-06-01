@@ -35,12 +35,13 @@ export function Footer() {
           <h4 className="text-sm font-semibold uppercase tracking-wider">Quick Links</h4>
           <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
             {[
-              ["/", "Home"],
-              ["/about", "About"],
-              ["/services", "Services"],
-              ["/industries", "Industries"],
-              ["/careers", "Careers"],
-              ["/contact", "Contact"],
+["/", "Home"],
+               ["/about", "About"],
+               ["/services", "Services"],
+               ["/industries", "Industries"],
+               ["/careers", "Careers"],
+               ["/blog", "Blog"],
+               ["/contact", "Contact"],
             ].map(([to, l]) => (
               <li key={to}>
                 <Link to={to} className="hover:text-primary">
@@ -56,7 +57,7 @@ export function Footer() {
           <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
             <li className="flex items-start gap-2">
               <Mail size={14} className="mt-1 text-primary" />
-<a href="mailto:info@svmstechnologies.com" target="_blank" rel="noopener noreferrer">
+              <a href="mailto:info@svmstechnologies.com" target="_blank" rel="noopener noreferrer">
                 info@svmstechnologies.com
               </a>
             </li>

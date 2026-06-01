@@ -2,51 +2,60 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Briefcase, X, Send } from "lucide-react";
 
 import { Reveal } from "@/components/site/Reveal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 
-const roles = [
-  {
-    t: "Senior Full-Stack Engineer",
-    loc: "Hyderabad / Remote",
-    type: "Full-time",
-  },
+interface CareerOpening {
+  id: string;
+  title: string;
+  location: string;
+  type: string;
+}
 
-  {
-    t: "Data Annotation Specialist",
-    loc: "Hyderabad",
-    type: "Full-time",
-  },
-
-  {
-    t: "Machine Learning Engineer",
-    loc: "Remote",
-    type: "Full-time",
-  },
-
-  {
-    t: "Product Designer",
-    loc: "Hyderabad / Remote",
-    type: "Full-time",
-  },
-
-  {
-    t: "DevOps Engineer",
-    loc: "Remote",
-    type: "Contract",
-  },
+const defaultRoles: CareerOpening[] = [
+  { id: "1", title: "Frontend Developer", location: "Remote", type: "Full Time" },
+  { id: "2", title: "Backend Engineer", location: "Hyderabad", type: "Full Time" },
+  { id: "3", title: "UI/UX Designer", location: "Bangalore", type: "Internship" },
+  { id: "4", title: "AI Engineer", location: "Remote", type: "Contract" },
 ];
 
 export default function CareersPage() {
   const [open, setOpen] = useState(false);
-
   const [selectedRole, setSelectedRole] = useState("");
-
   const [loading, setLoading] = useState(false);
-
   const [sent, setSent] = useState(false);
-
   const [step, setStep] = useState(1);
+  const [roles, setRoles] = useState<CareerOpening[]>(defaultRoles);
+
+  useEffect(() => {
+    const loadRoles = async () => {
+      try {
+        const { error: checkError } = await supabase.from("career_openings").select("id").limit(1);
+        if (checkError && !checkError.message.includes("could not find the table")) {
+          throw checkError;
+        }
+        if (!checkError) {
+          const { data } = await supabase
+            .from("career_openings")
+            .select("*")
+            .order("id", { ascending: true });
+          if (data && data.length > 0) {
+            setRoles(data);
+            localStorage.setItem("careerOpenings", JSON.stringify(data));
+          }
+        }
+      } catch (err) {
+        const saved = localStorage.getItem("careerOpenings");
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setRoles(parsed);
+          }
+        }
+      }
+    };
+    loadRoles();
+  }, []);
 
   // =========================
   // SUBMIT FORM
@@ -122,28 +131,6 @@ export default function CareersPage() {
 
     setLoading(false);
   };
-  const roles = [
-    {
-      t: "Frontend Developer",
-      loc: "Remote",
-      type: "Full Time",
-    },
-    {
-      t: "Backend Engineer",
-      loc: "Hyderabad",
-      type: "Full Time",
-    },
-    {
-      t: "UI/UX Designer",
-      loc: "Bangalore",
-      type: "Internship",
-    },
-    {
-      t: "AI Engineer",
-      loc: "Remote",
-      type: "Contract",
-    },
-  ];
 
   return (
     <div>
@@ -169,7 +156,7 @@ export default function CareersPage() {
         <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl">
           {roles.map((r, i) => (
             <Reveal
-              key={r.t}
+              key={r.id}
               delay={i * 80}
               className={`flex flex-wrap items-center justify-between gap-4 p-6 transition-all duration-300 hover:bg-white/5 md:p-8 ${
                 i !== 0 ? "border-t border-white/10" : ""
@@ -181,10 +168,10 @@ export default function CareersPage() {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold">{r.t}</h3>
+                  <h3 className="text-lg font-semibold">{r.title}</h3>
 
                   <p className="text-sm text-muted-foreground">
-                    {r.loc} · {r.type}
+                    {r.location} · {r.type}
                   </p>
                 </div>
               </div>
@@ -193,7 +180,7 @@ export default function CareersPage() {
               <button
                 onClick={() => {
                   setOpen(true);
-                  setSelectedRole(r.t);
+                  setSelectedRole(r.title);
                 }}
                 className="inline-flex items-center gap-2 rounded-full bg-emerald-300 px-5 py-3 text-sm font-semibold text-emerald-950 transition-all duration-300 hover:-translate-y-1 hover:scale-105"
               >
