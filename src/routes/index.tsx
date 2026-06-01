@@ -91,8 +91,8 @@ const process = [
 ];
 
 const stats = [
-  { n: "100+", l: "Projects Completed" },
-  { n: "50+", l: "Happy Clients" },
+  { n: "50+", l: "Projects Completed" },
+  { n: "25+", l: "Happy Clients" },
   { n: "99%", l: "Quality Accuracy" },
   { n: "24/7", l: "Client Support" },
 ];
