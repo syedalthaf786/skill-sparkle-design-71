@@ -11,6 +11,7 @@ import Careers from "./routes/careers";
 import Contact from "./routes/contact";
 import Admin from "./routes/admin";
 import Blog from "./routes/blog";
+import BlogDetails from "./routes/blog-details";
 import "./styles.css";
 
 function ScrollToTop() {
@@ -41,6 +42,7 @@ const router = createBrowserRouter([
       { path: "contact", element: <Contact /> },
       { path: "admin", element: <Admin /> },
       { path: "blog", element: <Blog /> },
+      { path: "blog/:id", element: <BlogDetails /> },
       { path: "*", element: <NotFoundComponent /> },
     ],
   },

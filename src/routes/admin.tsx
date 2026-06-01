@@ -177,36 +177,67 @@ export default function Admin() {
     loadBlogPosts();
   }, []);
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
+     const file = e.target.files?.[0];
+     if (!file) return;
 
-    // Try Supabase Storage first, fallback to base64
-    try {
-      const fileName = `popup-ads/${id}-${Date.now()}`;
-      const { data: uploadData, error: uploadError } = await supabase.storage
-        .from("popup-ads")
-        .upload(fileName, file);
+     // Try Supabase Storage first, fallback to base64
+     try {
+       const fileName = `popup-ads/${id}-${Date.now()}`;
+       const { data: uploadData, error: uploadError } = await supabase.storage
+         .from("popup-ads")
+         .upload(fileName, file);
 
-      if (uploadError) throw uploadError;
+       if (uploadError) throw uploadError;
 
-      const { data: urlData } = supabase.storage.from("popup-ads").getPublicUrl(fileName);
-      if (urlData?.publicUrl) {
-        updateAdUrl(id, urlData.publicUrl);
-        return;
-      }
-    } catch (storageErr: any) {
-      console.warn("Storage upload failed, using base64 fallback:", storageErr.message);
-    }
+       const { data: urlData } = supabase.storage.from("popup-ads").getPublicUrl(fileName);
+       if (urlData?.publicUrl) {
+         updateAdUrl(id, urlData.publicUrl);
+         return;
+       }
+     } catch (storageErr: any) {
+       console.warn("Storage upload failed, using base64 fallback:", storageErr.message);
+     }
 
-    // Fallback: Use base64 encoding
-    const reader = new FileReader();
-    reader.onload = () => {
-      const base64 = reader.result as string;
-      updateAdUrl(id, base64);
-    };
-    reader.readAsDataURL(file);
-  };
+     // Fallback: Use base64 encoding
+     const reader = new FileReader();
+     reader.onload = () => {
+       const base64 = reader.result as string;
+       updateAdUrl(id, base64);
+     };
+     reader.readAsDataURL(file);
+   };
+
+   const handleBlogPostImageChange = async (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
+     const file = e.target.files?.[0];
+     if (!file) return;
+
+     // Try Supabase Storage first, fallback to base64
+     try {
+       const fileName = `blog-post-images/${id}-${Date.now()}`;
+       const { data: uploadData, error: uploadError } = await supabase.storage
+         .from("popup-ads")
+         .upload(fileName, file);
+
+       if (uploadError) throw uploadError;
+
+       const { data: urlData } = supabase.storage.from("popup-ads").getPublicUrl(fileName);
+       if (urlData?.publicUrl) {
+         updateBlogPostImage(id, urlData.publicUrl);
+         return;
+       }
+     } catch (storageErr: any) {
+       console.warn("Storage upload failed, using base64 fallback:", storageErr.message);
+     }
+
+     // Fallback: Use base64 encoding
+     const reader = new FileReader();
+     reader.onload = () => {
+       const base64 = reader.result as string;
+       updateBlogPostImage(id, base64);
+     };
+     reader.readAsDataURL(file);
+   };
 
   const addAd = () => {
     setAds([...ads, { id: Date.now().toString(), url: "" }]);
@@ -220,10 +251,16 @@ export default function Admin() {
     setAds(ads.filter((ad) => ad.id !== id));
   };
 
-  const updateAdUrl = (id: string, url: string) => {
-    const newAds = ads.map((ad) => (ad.id === id ? { ...ad, url } : ad));
-    setAds(newAds);
-  };
+   const updateAdUrl = (id: string, url: string) => {
+     const newAds = ads.map((ad) => (ad.id === id ? { ...ad, url } : ad));
+     setAds(newAds);
+   };
+
+   const updateBlogPostImage = (id: string, url: string) => {
+     setBlogPosts(
+       blogPosts.map((p) => (p.id === id ? { ...p, image: url } : p))
+     );
+   };
 
   const handleSave = async () => {
     try {
@@ -514,19 +551,48 @@ export default function Admin() {
                             placeholder="Author"
                             className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
                           />
-                          <input
-                            type="text"
-                            value={post.image || ""}
-                            onChange={(e) =>
-                              setBlogPosts(
-                                blogPosts.map((p) =>
-                                  p.id === post.id ? { ...p, image: e.target.value } : p
-                                )
-                              )
-                            }
-                            placeholder="Image URL (optional)"
-                            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
-                          />
+                           <div className="space-y-2">
+                             <input
+                               ref={(el) => {
+                                 if (el) fileInputRefs.current[post.id] = el;
+                               }}
+                               type="file"
+                               accept="image/*"
+                               onChange={(e) => handleBlogPostImageChange(e, post.id)}
+                               className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm mb-2"
+                             />
+                             <input
+                               type="text"
+                               value={post.image || ""}
+                               onChange={(e) =>
+                                 setBlogPosts(
+                                   blogPosts.map((p) =>
+                                     p.id === post.id ? { ...p, image: e.target.value } : p
+                                   )
+                                 )
+                               }
+                               placeholder="Image URL (optional)"
+                               className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
+                             />
+                           </div>
+
+                           {post.image && (
+                             <div className="mt-3 rounded-lg overflow-hidden">
+                               <img
+                                 src={post.image}
+                                 alt={`Blog post ${index + 1} preview`}
+                                 className="w-full max-h-40 object-cover"
+                                 onError={(e) => {
+                                   e.currentTarget.src = "https://placehold.co/400x200/png?text=Blog+Preview";
+                                 }}
+                               />
+                             </div>
+                           )}
+                           {!post.image && (
+                             <div className="mt-3 rounded-lg overflow-hidden bg-muted flex items-center justify-center h-40">
+                               <span className="text-sm text-muted-foreground">No image selected</span>
+                             </div>
+                           )}
                           <textarea
                             value={post.content}
                             onChange={(e) =>
