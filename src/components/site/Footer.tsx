@@ -56,11 +56,11 @@ export function Footer() {
           <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
             <li className="flex items-start gap-2">
               <Mail size={14} className="mt-1 text-primary" />
-              <a href="mailto:info@svmstechnologies.com" target="_blank" rel="noopener noreferrer">
+<a href="mailto:info@svmstechnologies.com" target="_blank" rel="noopener noreferrer">
                 info@svmstechnologies.com
               </a>
-            </li>href={href}
-            <li clrel=\"noopener noreferrer\"assName="flex items-start gap-2">
+            </li>
+            <li className="flex items-start gap-2">
               <Phone size={14} className="mt-1 text-primary" />{" "}
               <a href="tel:+918328210998" target="_blank" rel="noopener noreferrer">
                 +91 83282 10998
