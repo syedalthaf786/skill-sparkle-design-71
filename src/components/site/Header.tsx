@@ -52,14 +52,14 @@ export function Header() {
         </div>
       </div>
       {open && (
-        <div className="border-t border-border md:hidden">
-          <div className="container-x flex flex-col py-3">
+        <div className="md:hidden mx-auto mt-2 max-w-6xl rounded-2xl border border-white/10 bg-[#0B0E11]/95 backdrop-blur-xl p-3 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+          <div className="flex flex-col">
             {nav.map((n) => (
               <Link
                 key={n.to}
                 to={n.to}
                 onClick={() => setOpen(false)}
-                className="rounded-md px-3 py-2 text-sm font-medium text-foreground hover:bg-secondary"
+                className="rounded-xl px-3 py-2.5 text-sm font-medium text-foreground hover:bg-white/5"
               >
                 {n.label}
               </Link>
