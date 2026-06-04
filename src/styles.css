@@ -7,6 +7,7 @@
 @theme inline {
   --font-display: "Sora", system-ui, sans-serif;
   --font-sans: "Manrope", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -42,94 +43,64 @@
 :root {
   --radius: 0.875rem;
 
-  /* ===== Claymorphism: Puffy Pastel Clay ===== */
-  --background: #F0F5FA;
-  --foreground: #2D3436;
+  /* ===== Modal-inspired: Dark + Neon Mint ===== */
+  --background: #07090B;
+  --foreground: #E6E9EC;
 
-  --surface: #E9F3FF;
-  --surface-foreground: #1E3A8A;
+  --surface: #0E1216;
+  --surface-foreground: #E6E9EC;
 
-  --card: #E9F3FF;
-  --card-foreground: #1E3A8A;
-  --popover: #FFFFFF;
-  --popover-foreground: #1E293B;
+  --card: #0E1216;
+  --card-foreground: #E6E9EC;
+  --popover: #0B0E11;
+  --popover-foreground: #E6E9EC;
 
-  --primary: #1E3A8A;
-  --primary-foreground: #FFFFFF;
-  --primary-glow: #4F6FD8;
+  --primary: #7FEE64;
+  --primary-foreground: #06140A;
+  --primary-glow: #B6FF9A;
 
-  --accent: #10B981;
-  --accent-foreground: #064E3B;
+  --accent: #7FEE64;
+  --accent-foreground: #06140A;
 
-  --secondary: #E0E9FF;
-  --secondary-foreground: #1E3A8A;
+  --secondary: #14191E;
+  --secondary-foreground: #E6E9EC;
 
-  --muted: #EBF1FA;
-  --muted-foreground: #64748B;
+  --muted: #11151A;
+  --muted-foreground: #8A95A1;
 
-  --destructive: oklch(0.6 0.22 27);
+  --destructive: oklch(0.62 0.23 27);
   --destructive-foreground: #FFFFFF;
 
-  --border: #DCE6F2;
-  --input: #DCE6F2;
-  --ring: #1E3A8A;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #7FEE64;
 
-  --clay-1: #E9F3FF;
-  --clay-2: #EDFAF4;
-  --clay-3: #FFF4E6;
-  --clay-4: #F3EEFF;
-  --clay-5: #FFEBF1;
-  --clay-6: #E8F8FF;
+  --clay-1: #0E1216;
+  --clay-2: #0E1216;
+  --clay-3: #0E1216;
+  --clay-4: #0E1216;
+  --clay-5: #0E1216;
+  --clay-6: #0E1216;
 
-  --clay-light: rgba(255, 255, 255, 0.85);
-  --clay-dark: rgba(166, 180, 210, 0.30);
-  --clay-deep: rgba(0, 0, 0, 0.06);
-
-  --gradient-brand: linear-gradient(135deg, #1E3A8A 0%, #10B981 100%);
+  --gradient-brand: linear-gradient(135deg, #7FEE64 0%, #3DCBA0 100%);
   --gradient-hero: radial-gradient(
-    ellipse 80% 60% at 50% 0%,
-    rgba(79, 111, 216, 0.18),
-    transparent 60%
+    ellipse 70% 50% at 50% 0%,
+    rgba(127, 238, 100, 0.18),
+    transparent 70%
   );
-  --gradient-soft: linear-gradient(180deg, var(--surface) 0%, var(--background) 100%);
+  --gradient-soft: linear-gradient(180deg, #0B0E11 0%, #07090B 100%);
 
-  --shadow-clay:
-    12px 14px 28px rgba(166, 180, 210, 0.45),
-    -10px -10px 24px rgba(255, 255, 255, 0.9);
-  --shadow-clay-inset:
-    inset 8px 8px 16px var(--clay-light),
-    inset -8px -8px 16px var(--clay-dark);
-  --shadow-clay-pressed:
-    inset 6px 6px 12px rgba(166, 180, 210, 0.45),
-    inset -6px -6px 12px rgba(255, 255, 255, 0.8);
-  --shadow-soft: 8px 10px 20px rgba(166, 180, 210, 0.35), -6px -6px 16px rgba(255, 255, 255, 0.85);
-  --shadow-elevated: 18px 22px 40px rgba(166, 180, 210, 0.5), -12px -12px 30px rgba(255, 255, 255, 0.9);
-  --shadow-glow:
-    12px 14px 28px rgba(30, 58, 138, 0.18),
-    -8px -8px 20px rgba(255, 255, 255, 0.9);
+  --shadow-clay: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 20px 60px rgba(0, 0, 0, 0.55);
+  --shadow-clay-inset: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --shadow-clay-pressed: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --shadow-elevated: 0 25px 60px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 0 1px rgba(127, 238, 100, 0.35), 0 10px 40px rgba(127, 238, 100, 0.25);
 }
 
 .dark {
-  --background: oklch(0.14 0.03 260);
-  --foreground: oklch(0.97 0.005 240);
-  --surface: oklch(0.18 0.04 260);
-  --surface-foreground: oklch(0.97 0.005 240);
-  --card: oklch(0.18 0.04 260);
-  --card-foreground: oklch(0.97 0.005 240);
-  --popover: oklch(0.18 0.04 260);
-  --popover-foreground: oklch(0.97 0.005 240);
-  --primary: oklch(0.7 0.18 258);
-  --primary-foreground: oklch(0.14 0.03 260);
-  --primary-glow: oklch(0.78 0.18 258);
-  --accent: oklch(0.78 0.18 145);
-  --accent-foreground: oklch(0.14 0.03 260);
-  --secondary: oklch(0.24 0.04 260);
-  --secondary-foreground: oklch(0.97 0.005 240);
-  --muted: oklch(0.22 0.03 260);
-  --muted-foreground: oklch(0.7 0.02 250);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 12%);
-  --ring: oklch(0.7 0.18 258);
+  --background: #07090B;
+  --foreground: #E6E9EC;
 }
 
 @layer base {
@@ -146,135 +117,91 @@
     font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
   }
-  h1,
-  h2,
-  h3,
-  h4,
-  h5 {
+  h1, h2, h3, h4, h5 {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
+    color: var(--color-foreground);
   }
 }
 
 @layer components {
   .container-x {
-    @apply mx-auto w-full max-w-7xl px-6 lg:px-10;
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-10;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-7 py-3.5 text-sm font-bold transition-all duration-300;
-    background: var(--secondary);
-    color: var(--primary);
-    box-shadow:
-      inset 4px 4px 8px rgba(255, 255, 255, 0.9),
-      inset -4px -4px 8px rgba(166, 180, 210, 0.4),
-      8px 12px 18px rgba(30, 58, 138, 0.12);
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    box-shadow: 0 0 0 1px rgba(127, 238, 100, 0.4), 0 8px 24px rgba(127, 238, 100, 0.18);
   }
   .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow:
-      inset 4px 4px 8px rgba(255, 255, 255, 0.95),
-      inset -4px -4px 8px rgba(166, 180, 210, 0.5),
-      12px 16px 24px rgba(30, 58, 138, 0.18);
+    background: var(--primary-glow);
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 1px rgba(127, 238, 100, 0.6), 0 12px 32px rgba(127, 238, 100, 0.28);
   }
-  .btn-primary:active {
-    transform: translateY(0);
-    box-shadow:
-      inset 6px 6px 10px rgba(166, 180, 210, 0.5),
-      inset -6px -6px 10px rgba(255, 255, 255, 0.8);
-  }
+  .btn-primary:active { transform: translateY(0); }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-7 py-3.5 text-sm font-bold transition-all duration-300;
-    border: 0;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200;
+    background: rgba(255, 255, 255, 0.04);
     color: var(--foreground);
-    background: var(--background);
-    box-shadow:
-      6px 6px 14px rgba(166, 180, 210, 0.4),
-      -6px -6px 14px rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.12);
   }
   .btn-outline:hover {
-    color: var(--primary);
-    transform: translateY(-2px);
-    box-shadow:
-      9px 10px 20px rgba(166, 180, 210, 0.5),
-      -8px -8px 18px rgba(255, 255, 255, 0.95);
-  }
-  .btn-outline:active {
-    box-shadow: var(--shadow-clay-pressed);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.22);
   }
 
   .eyebrow {
-    @apply inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em];
-    background: var(--secondary);
+    @apply inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em];
+    background: rgba(127, 238, 100, 0.08);
     color: var(--primary);
-    box-shadow:
-      inset 2px 2px 4px rgba(255, 255, 255, 0.9),
-      inset -2px -2px 4px rgba(166, 180, 210, 0.35);
+    border: 1px solid rgba(127, 238, 100, 0.22);
   }
 
   .card-surface {
-    @apply relative rounded-[32px] p-7 transition-all duration-500;
-    background: var(--clay-1);
-    border: 0;
-    box-shadow:
-      inset 10px 10px 20px rgba(255, 255, 255, 0.85),
-      inset -10px -10px 20px rgba(160, 180, 210, 0.28),
-      14px 18px 30px rgba(166, 180, 210, 0.35),
-      -8px -8px 20px rgba(255, 255, 255, 0.7);
+    @apply relative rounded-2xl p-7 transition-all duration-300;
+    background: linear-gradient(180deg, #0F1418 0%, #0A0D11 100%);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 20px 50px rgba(0, 0, 0, 0.4);
   }
   .card-surface::before { content: none; }
   .card-surface:hover {
-    transform: translateY(-6px);
-    box-shadow:
-      inset 12px 12px 22px rgba(255, 255, 255, 0.9),
-      inset -12px -12px 22px rgba(160, 180, 210, 0.32),
-      20px 24px 40px rgba(166, 180, 210, 0.5),
-      -10px -10px 24px rgba(255, 255, 255, 0.85);
+    transform: translateY(-3px);
+    border-color: rgba(127, 238, 100, 0.25);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 25px 60px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(127, 238, 100, 0.12);
   }
 
-  .clay-rotate > *:nth-child(6n + 1) .card-surface,
-  .card-surface.clay-1 { background: var(--clay-1); }
-  .clay-rotate > *:nth-child(6n + 2) .card-surface,
-  .card-surface.clay-2 { background: var(--clay-2); }
-  .clay-rotate > *:nth-child(6n + 3) .card-surface,
-  .card-surface.clay-3 { background: var(--clay-3); }
-  .clay-rotate > *:nth-child(6n + 4) .card-surface,
-  .card-surface.clay-4 { background: var(--clay-4); }
-  .clay-rotate > *:nth-child(6n + 5) .card-surface,
-  .card-surface.clay-5 { background: var(--clay-5); }
-  .clay-rotate > *:nth-child(6n) .card-surface,
-  .card-surface.clay-6 { background: var(--clay-6); }
+  /* keep claymorphism API but flatten to dark surfaces */
+  .clay-rotate > * .card-surface,
+  .card-surface.clay-1,
+  .card-surface.clay-2,
+  .card-surface.clay-3,
+  .card-surface.clay-4,
+  .card-surface.clay-5,
+  .card-surface.clay-6 {
+    background: linear-gradient(180deg, #0F1418 0%, #0A0D11 100%);
+  }
 
   .clay-inset {
-    background: var(--background);
+    background: #0B0E11;
     border-radius: 1rem;
-    box-shadow: var(--shadow-clay-pressed);
-    border: 0;
+    border: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .clay-bubble {
-    background: #FFFFFF;
-    border-radius: 1.25rem;
-    box-shadow:
-      inset 2px 2px 4px rgba(255, 255, 255, 0.9),
-      inset -2px -2px 4px rgba(166, 180, 210, 0.25),
-      5px 6px 12px rgba(166, 180, 210, 0.35),
-      -4px -4px 10px rgba(255, 255, 255, 0.85);
+    background: rgba(127, 238, 100, 0.08);
+    border-radius: 0.85rem;
+    border: 1px solid rgba(127, 238, 100, 0.22);
+    color: var(--primary);
   }
 
   @keyframes floaty {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-6px);
-    }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
   }
-  .animate-floaty {
-    animation: floaty 6s ease-in-out infinite;
-  }
+  .animate-floaty { animation: floaty 6s ease-in-out infinite; }
 
   .brand-text {
     background: var(--gradient-brand);
