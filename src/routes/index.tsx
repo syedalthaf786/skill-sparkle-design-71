@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import heroTeam from "@/assets/hero-team.jpg";
 import { Reveal } from "@/components/site/Reveal";
+import RoboSnowBackground from "@/components/site/RoboSnowBackground";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import {
   ArrowRight,
@@ -259,9 +260,10 @@ export default function Index() {
            </div>
          )}
         {/* HERO */}
-        <section className="relative overflow-hidden">
-          <div className="hero-glow absolute inset-0 -z-10" />
+        <section className="relative overflow-hidden text-slate-900">
+          <RoboSnowBackground className="-z-10" />
           <div className="container-x grid items-center gap-12 py-20 lg:grid-cols-2 lg:py-28">
+
             <div>
               <Tooltip>
                 <TooltipTrigger asChild>
