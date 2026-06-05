@@ -213,4 +213,30 @@
   .hero-glow {
     background: var(--gradient-hero);
   }
+
+  /* ===== Snowfall ===== */
+  @keyframes snowfall {
+    0%   { transform: translate3d(0, -10vh, 0) rotate(0deg); }
+    100% { transform: translate3d(var(--drift, 0), 110vh, 0) rotate(360deg); }
+  }
+
+  /* ===== Service card flip-in ===== */
+  @keyframes flip-in {
+    0%   { opacity: 0; transform: perspective(900px) rotateY(-90deg) translateY(20px); }
+    60%  { opacity: 1; transform: perspective(900px) rotateY(15deg) translateY(0); }
+    100% { opacity: 1; transform: perspective(900px) rotateY(0deg) translateY(0); }
+  }
+  .flip-in {
+    opacity: 0;
+    transform-origin: center center;
+    backface-visibility: hidden;
+    animation: flip-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .flip-card {
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s;
+    transform-style: preserve-3d;
+  }
+  .flip-card:hover {
+    transform: perspective(900px) rotateY(8deg) rotateX(-4deg) translateY(-4px);
+  }
 }

@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import heroTeam from "@/assets/hero-team.jpg";
 import { Reveal } from "@/components/site/Reveal";
+import RoboSnowBackground from "@/components/site/RoboSnowBackground";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import {
   ArrowRight,
@@ -142,6 +143,54 @@ function TooltipCard({ tooltip, children }: { tooltip: string; children: ReactNo
   );
 }
 
+function ServicesGrid() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.2 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <div ref={ref} className="mt-14 grid gap-6 md:grid-cols-3">
+      {services.map((s, i) => (
+        <TooltipCard key={s.title} tooltip={s.desc}>
+          <div
+            className={`card-surface flip-card group ${visible ? "flip-in" : "opacity-0"}`}
+            style={{ animationDelay: visible ? `${i * 220}ms` : undefined }}
+          >
+            <div
+              className="grid h-12 w-12 place-items-center rounded-xl"
+              style={{ background: "color-mix(in oklab, var(--accent) 20%, transparent)" }}
+            >
+              <s.icon size={22} className="text-primary" />
+            </div>
+            <h3 className="mt-5 text-xl font-semibold">{s.title}</h3>
+            <p className="mt-2 text-sm text-muted-foreground">{s.desc}</p>
+            <Link
+              to="/services"
+              className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary"
+            >
+              Learn more{" "}
+              <ArrowRight size={14} className="transition group-hover:translate-x-1" />
+            </Link>
+          </div>
+        </TooltipCard>
+      ))}
+    </div>
+  );
+}
+
 export default function Index() {
   const [showPopup, setShowPopup] = useState(false);
   const [ads, setAds] = useState<Array<{ id: string; url: string }>>([{ id: "1", url: "/ad-banner.jpg" }]);
@@ -259,9 +308,10 @@ export default function Index() {
            </div>
          )}
         {/* HERO */}
-        <section className="relative overflow-hidden">
-          <div className="hero-glow absolute inset-0 -z-10" />
+        <section className="relative overflow-hidden text-slate-900">
+          <RoboSnowBackground className="-z-10" />
           <div className="container-x grid items-center gap-12 py-20 lg:grid-cols-2 lg:py-28">
+
             <div>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -379,32 +429,9 @@ export default function Index() {
               solutions.
             </p>
           </div>
-          <div className="mt-14 grid gap-6 md:grid-cols-3">
-            {services.map((s, i) => (
-              <Reveal key={s.title} delay={i * 90} className="w-full">
-                <TooltipCard tooltip={s.desc}>
-                  <div className="card-surface group">
-                    <div
-                      className="grid h-12 w-12 place-items-center rounded-xl"
-                      style={{ background: "color-mix(in oklab, var(--accent) 20%, transparent)" }}
-                    >
-                      <s.icon size={22} className="text-primary" />
-                    </div>
-                    <h3 className="mt-5 text-xl font-semibold">{s.title}</h3>
-                    <p className="mt-2 text-sm text-muted-foreground">{s.desc}</p>
-                    <Link
-                      to="/services"
-                      className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary"
-                    >
-                      Learn more{" "}
-                      <ArrowRight size={14} className="transition group-hover:translate-x-1" />
-                    </Link>
-                  </div>
-                </TooltipCard>
-              </Reveal>
-            ))}
-          </div>
+          <ServicesGrid />
         </section>
+
 
         {/* WHY US */}
         <section className="bg_surface py-24">
