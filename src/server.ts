@@ -1,8 +1,18 @@
 // Simplified server entry - in a real Vite app, this would be handled by Vite's dev server
 // For production builds, we'd need a proper adapter, but for now we'll return a basic response
+import { consumeLastCapturedError } from "./lib/error-capture";
+import { renderErrorPage } from "./lib/error-page";
+
 type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
 };
+
+function brandedErrorResponse(): Response {
+  return new Response(renderErrorPage(), {
+    status: 500,
+    headers: { "content-type": "text/html; charset=utf-8" },
+  });
+}
 
 let serverEntryPromise: Promise<ServerEntry> | undefined;
 
