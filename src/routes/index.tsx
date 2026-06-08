@@ -310,7 +310,14 @@ export default function Index() {
         {/* HERO */}
         <section className="relative overflow-hidden text-slate-900">
           <RoboSnowBackground className="-z-10" />
-          <div className="container-x grid items-center gap-12 py-20 lg:grid-cols-2 lg:py-28">
+          {/* Floating decorative boxes */}
+          <div className="pointer-events-none absolute inset-0 -z-10">
+            <div className="float-box a" style={{ width: 90, height: 90, top: "12%", left: "6%" }} />
+            <div className="float-box b" style={{ width: 60, height: 60, top: "60%", left: "12%" }} />
+            <div className="float-box c" style={{ width: 120, height: 120, top: "20%", right: "8%" }} />
+            <div className="float-box a" style={{ width: 50, height: 50, bottom: "10%", right: "20%" }} />
+          </div>
+          <div className="container-x grid items-center gap-12 py-20 lg:grid-cols-2 lg:py-28 scroll-parallax">
 
             <div>
               <Tooltip>
