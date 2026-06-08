@@ -32,22 +32,28 @@ import {
 } from "lucide-react";
 import video from "@/assets/video.mp4";
 import gif1 from "@/assets/ai1.webp";
+import svcAnnotation from "@/assets/svc-annotation.jpg";
+import svcWeb from "@/assets/svc-web.jpg";
+import svcIt from "@/assets/svc-it.jpg";
 
 const services = [
   {
     icon: Database,
     title: "AI Data Annotation",
     desc: "Accurate, scalable annotation for AI & ML projects — image, video, text, and audio.",
+    image: svcAnnotation,
   },
   {
     icon: Code2,
     title: "Web Design & Development",
     desc: "Creative, responsive websites optimized for performance, SEO, and user experience.",
+    image: svcWeb,
   },
   {
     icon: Cpu,
     title: "IT & Software Solutions",
     desc: "End-to-end custom software, AI/ML, automation, and cloud services for enterprises.",
+    image: svcIt,
   },
 ];
 
@@ -162,24 +168,24 @@ function ServicesGrid() {
     return () => io.disconnect();
   }, []);
   return (
-    <div ref={ref} className="mt-14 grid gap-6 md:grid-cols-3 scroll-rise">
+    <div ref={ref} className="mt-14 grid gap-6 md:grid-cols-3">
       {services.map((s, i) => (
         <TooltipCard key={s.title} tooltip={s.desc}>
           <div
-            className={`card-surface flip-card group ${visible ? "flip-in" : "opacity-0"}`}
-            style={{ animationDelay: visible ? `${i * 220}ms` : undefined }}
+            className={`card-surface group ${visible ? "service-card" : "opacity-0"}`}
+            style={{ ["--i" as any]: i }}
           >
-            <div
-              className="grid h-12 w-12 place-items-center rounded-xl"
-              style={{ background: "color-mix(in oklab, var(--accent) 20%, transparent)" }}
-            >
-              <s.icon size={22} className="text-primary" />
+            <div className="service-media">
+              <img src={s.image} alt={s.title} loading="lazy" width={768} height={480} />
+              <div className="badge">
+                <s.icon size={18} />
+              </div>
             </div>
-            <h3 className="mt-5 text-xl font-semibold">{s.title}</h3>
-            <p className="mt-2 text-sm text-muted-foreground">{s.desc}</p>
+            <h3 className="service-title mt-6 text-xl font-semibold">{s.title}</h3>
+            <p className="service-desc mt-2 text-sm text-muted-foreground">{s.desc}</p>
             <Link
               to="/services"
-              className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary"
+              className="service-cta mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary"
             >
               Learn more{" "}
               <ArrowRight size={14} className="transition group-hover:translate-x-1" />
