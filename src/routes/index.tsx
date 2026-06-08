@@ -32,22 +32,28 @@ import {
 } from "lucide-react";
 import video from "@/assets/video.mp4";
 import gif1 from "@/assets/ai1.webp";
+import svcAnnotation from "@/assets/svc-annotation.jpg";
+import svcWeb from "@/assets/svc-web.jpg";
+import svcIt from "@/assets/svc-it.jpg";
 
 const services = [
   {
     icon: Database,
     title: "AI Data Annotation",
     desc: "Accurate, scalable annotation for AI & ML projects — image, video, text, and audio.",
+    image: svcAnnotation,
   },
   {
     icon: Code2,
     title: "Web Design & Development",
     desc: "Creative, responsive websites optimized for performance, SEO, and user experience.",
+    image: svcWeb,
   },
   {
     icon: Cpu,
     title: "IT & Software Solutions",
     desc: "End-to-end custom software, AI/ML, automation, and cloud services for enterprises.",
+    image: svcIt,
   },
 ];
 
