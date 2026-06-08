@@ -162,7 +162,7 @@ function ServicesGrid() {
     return () => io.disconnect();
   }, []);
   return (
-    <div ref={ref} className="mt-14 grid gap-6 md:grid-cols-3">
+    <div ref={ref} className="mt-14 grid gap-6 md:grid-cols-3 scroll-rise">
       {services.map((s, i) => (
         <TooltipCard key={s.title} tooltip={s.desc}>
           <div
