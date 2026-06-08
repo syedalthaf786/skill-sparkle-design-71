@@ -43,64 +43,64 @@
 :root {
   --radius: 0.875rem;
 
-  /* ===== Modal-inspired: Dark + Neon Mint ===== */
-  --background: #07090B;
-  --foreground: #E6E9EC;
+  /* ===== Light theme: white background, black text ===== */
+  --background: #FFFFFF;
+  --foreground: #000000;
 
-  --surface: #0E1216;
-  --surface-foreground: #E6E9EC;
+  --surface: #FFFFFF;
+  --surface-foreground: #000000;
 
-  --card: #0E1216;
-  --card-foreground: #E6E9EC;
-  --popover: #0B0E11;
-  --popover-foreground: #E6E9EC;
+  --card: #FFFFFF;
+  --card-foreground: #000000;
+  --popover: #FFFFFF;
+  --popover-foreground: #000000;
 
-  --primary: #7FEE64;
-  --primary-foreground: #06140A;
-  --primary-glow: #B6FF9A;
+  --primary: #16A34A;
+  --primary-foreground: #FFFFFF;
+  --primary-glow: #22C55E;
 
-  --accent: #7FEE64;
-  --accent-foreground: #06140A;
+  --accent: #16A34A;
+  --accent-foreground: #FFFFFF;
 
-  --secondary: #14191E;
-  --secondary-foreground: #E6E9EC;
+  --secondary: #F4F4F5;
+  --secondary-foreground: #000000;
 
-  --muted: #11151A;
-  --muted-foreground: #8A95A1;
+  --muted: #F4F4F5;
+  --muted-foreground: #4B5563;
 
   --destructive: oklch(0.62 0.23 27);
   --destructive-foreground: #FFFFFF;
 
-  --border: rgba(255, 255, 255, 0.08);
-  --input: rgba(255, 255, 255, 0.12);
-  --ring: #7FEE64;
+  --border: rgba(0, 0, 0, 0.10);
+  --input: rgba(0, 0, 0, 0.14);
+  --ring: #16A34A;
 
-  --clay-1: #0E1216;
-  --clay-2: #0E1216;
-  --clay-3: #0E1216;
-  --clay-4: #0E1216;
-  --clay-5: #0E1216;
-  --clay-6: #0E1216;
+  --clay-1: #FFFFFF;
+  --clay-2: #FFFFFF;
+  --clay-3: #FFFFFF;
+  --clay-4: #FFFFFF;
+  --clay-5: #FFFFFF;
+  --clay-6: #FFFFFF;
 
-  --gradient-brand: linear-gradient(135deg, #7FEE64 0%, #3DCBA0 100%);
+  --gradient-brand: linear-gradient(135deg, #16A34A 0%, #22C55E 100%);
   --gradient-hero: radial-gradient(
     ellipse 70% 50% at 50% 0%,
-    rgba(127, 238, 100, 0.18),
+    rgba(22, 163, 74, 0.10),
     transparent 70%
   );
-  --gradient-soft: linear-gradient(180deg, #0B0E11 0%, #07090B 100%);
+  --gradient-soft: linear-gradient(180deg, #FFFFFF 0%, #F9FAFB 100%);
 
-  --shadow-clay: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 20px 60px rgba(0, 0, 0, 0.55);
-  --shadow-clay-inset: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  --shadow-clay-pressed: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.45);
-  --shadow-elevated: 0 25px 60px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 0 1px rgba(127, 238, 100, 0.35), 0 10px 40px rgba(127, 238, 100, 0.25);
+  --shadow-clay: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 20px 60px rgba(0, 0, 0, 0.08);
+  --shadow-clay-inset: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  --shadow-clay-pressed: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --shadow-elevated: 0 25px 60px rgba(0, 0, 0, 0.12);
+  --shadow-glow: 0 0 0 1px rgba(22, 163, 74, 0.25), 0 10px 40px rgba(22, 163, 74, 0.18);
 }
 
 .dark {
-  --background: #07090B;
-  --foreground: #E6E9EC;
+  --background: #FFFFFF;
+  --foreground: #000000;
 }
 
 @layer base {
@@ -162,18 +162,19 @@
 
   .card-surface {
     @apply relative rounded-2xl p-7 transition-all duration-300;
-    background: linear-gradient(180deg, #0F1418 0%, #0A0D11 100%);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 20px 50px rgba(0, 0, 0, 0.4);
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 10px 30px rgba(0, 0, 0, 0.06);
+    color: #000000;
   }
   .card-surface::before { content: none; }
   .card-surface:hover {
     transform: translateY(-3px);
-    border-color: rgba(127, 238, 100, 0.25);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 25px 60px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(127, 238, 100, 0.12);
+    border-color: rgba(22, 163, 74, 0.35);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 18px 40px rgba(0, 0, 0, 0.10), 0 0 0 1px rgba(22, 163, 74, 0.18);
   }
 
-  /* keep claymorphism API but flatten to dark surfaces */
+  /* keep claymorphism API but flatten to white surfaces */
   .clay-rotate > * .card-surface,
   .card-surface.clay-1,
   .card-surface.clay-2,
@@ -181,7 +182,7 @@
   .card-surface.clay-4,
   .card-surface.clay-5,
   .card-surface.clay-6 {
-    background: linear-gradient(180deg, #0F1418 0%, #0A0D11 100%);
+    background: #FFFFFF;
   }
 
   .clay-inset {
@@ -285,8 +286,8 @@
     overflow: hidden;
     border-radius: 1rem;
     aspect-ratio: 16 / 10;
-    border: 1px solid rgba(127, 238, 100, 0.15);
-    background: #0A0D11;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: #F4F4F5;
   }
   .service-media img {
     width: 100%;
@@ -301,7 +302,7 @@
   .service-media::after {
     content: "";
     position: absolute; inset: 0;
-    background: linear-gradient(180deg, transparent 40%, rgba(7,9,11,0.7) 100%);
+    background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.18) 100%);
     pointer-events: none;
   }
   .service-media .badge {
