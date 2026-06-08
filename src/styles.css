@@ -286,8 +286,8 @@
     overflow: hidden;
     border-radius: 1rem;
     aspect-ratio: 16 / 10;
-    border: 1px solid rgba(127, 238, 100, 0.15);
-    background: #0A0D11;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: #F4F4F5;
   }
   .service-media img {
     width: 100%;
@@ -302,7 +302,7 @@
   .service-media::after {
     content: "";
     position: absolute; inset: 0;
-    background: linear-gradient(180deg, transparent 40%, rgba(7,9,11,0.7) 100%);
+    background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.18) 100%);
     pointer-events: none;
   }
   .service-media .badge {
