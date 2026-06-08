@@ -15,8 +15,12 @@ import BlogDetails from "./routes/blog-details";
 import "./styles.css";
 
 // Global 3D mouse-tilt: writes --tx/--ty (-1..1) and --gx/--gy (% glare) on hovered cards.
+// Also writes a viewport-level --mx/--my (0..100) so a global spotlight can follow the cursor.
 if (typeof window !== "undefined") {
+  const root = document.documentElement;
   const handler = (e: MouseEvent) => {
+    root.style.setProperty("--mx", String((e.clientX / window.innerWidth) * 100));
+    root.style.setProperty("--my", String((e.clientY / window.innerHeight) * 100));
     const t = e.target as HTMLElement | null;
     const card = t?.closest?.(".card-surface") as HTMLElement | null;
     if (!card) return;
@@ -36,6 +40,30 @@ if (typeof window !== "undefined") {
   };
   window.addEventListener("mousemove", handler, { passive: true });
   window.addEventListener("mouseout", reset, { passive: true });
+
+  // ===== Scroll-synced 3D parallax per section =====
+  // Sets --sp (-1..1: -1 entering bottom, 0 centered, 1 leaving top) and --sp01 (0..1) on each <section>.
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const vh = window.innerHeight || 1;
+    const sections = document.querySelectorAll<HTMLElement>("section");
+    sections.forEach((s) => {
+      const r = s.getBoundingClientRect();
+      const center = r.top + r.height / 2;
+      const sp = Math.max(-1, Math.min(1, (vh / 2 - center) / (vh / 2 + r.height / 2)));
+      s.style.setProperty("--sp", sp.toFixed(4));
+      s.style.setProperty("--sp01", ((sp + 1) / 2).toFixed(4));
+    });
+  };
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
+  setTimeout(update, 0);
 }
 
 
