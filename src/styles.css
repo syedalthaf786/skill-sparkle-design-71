@@ -162,18 +162,19 @@
 
   .card-surface {
     @apply relative rounded-2xl p-7 transition-all duration-300;
-    background: linear-gradient(180deg, #0F1418 0%, #0A0D11 100%);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 20px 50px rgba(0, 0, 0, 0.4);
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 10px 30px rgba(0, 0, 0, 0.06);
+    color: #000000;
   }
   .card-surface::before { content: none; }
   .card-surface:hover {
     transform: translateY(-3px);
-    border-color: rgba(127, 238, 100, 0.25);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 25px 60px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(127, 238, 100, 0.12);
+    border-color: rgba(22, 163, 74, 0.35);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 18px 40px rgba(0, 0, 0, 0.10), 0 0 0 1px rgba(22, 163, 74, 0.18);
   }
 
-  /* keep claymorphism API but flatten to dark surfaces */
+  /* keep claymorphism API but flatten to white surfaces */
   .clay-rotate > * .card-surface,
   .card-surface.clay-1,
   .card-surface.clay-2,
@@ -181,7 +182,7 @@
   .card-surface.clay-4,
   .card-surface.clay-5,
   .card-surface.clay-6 {
-    background: linear-gradient(180deg, #0F1418 0%, #0A0D11 100%);
+    background: #FFFFFF;
   }
 
   .clay-inset {
