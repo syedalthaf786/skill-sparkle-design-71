@@ -296,12 +296,72 @@
   }
   .card-surface:hover::after { opacity: 1; }
 
+  /* Cursor-following spotlight, even when not hovering — uses viewport --mx/--my from main.tsx */
+  .card-surface::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    background: radial-gradient(
+      500px circle at calc(var(--mx, 50) * 1vw) calc(var(--my, 50) * 1vh),
+      rgba(127, 238, 100, 0.10),
+      transparent 40%
+    );
+    mix-blend-mode: screen;
+  }
+  .card-surface:hover::before { opacity: 1; }
+
   /* Section-level perspective so children rotate naturally */
-  section { perspective: 1400px; }
+  section {
+    perspective: 1400px;
+    /* Scroll-synced subtle 3D tilt: --sp goes -1..1, set by main.tsx */
+    transform: perspective(1400px)
+               rotateX(calc(var(--sp, 0) * -3deg))
+               translate3d(0, calc(var(--sp, 0) * -12px), 0);
+    transition: transform 0.2s linear;
+    transform-style: preserve-3d;
+  }
+
+  /* Scroll-driven utility classes — apply on any element inside a section */
+  .scroll-rotate    { transform: rotateY(calc(var(--sp, 0) * 18deg)) rotateX(calc(var(--sp, 0) * -6deg)); transform-style: preserve-3d; transition: transform 0.15s linear; }
+  .scroll-parallax  { transform: translate3d(0, calc(var(--sp, 0) * -40px), 0); transition: transform 0.15s linear; will-change: transform; }
+  .scroll-parallax-down { transform: translate3d(0, calc(var(--sp, 0) * 40px), 0); transition: transform 0.15s linear; }
+  .scroll-zoom      { transform: scale(calc(1 + var(--sp01, 0.5) * 0.08)); transition: transform 0.15s linear; }
+  .scroll-rise      { opacity: var(--sp01, 1); transform: translate3d(0, calc((1 - var(--sp01, 1)) * 60px), 0) rotateX(calc((1 - var(--sp01, 1)) * 10deg)); transition: transform 0.15s linear, opacity 0.2s linear; }
+
+  /* ===== Floating decorative boxes ===== */
+  @keyframes float-box-a {
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+    50%      { transform: translate3d(20px, -30px, 0) rotate(8deg); }
+  }
+  @keyframes float-box-b {
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+    50%      { transform: translate3d(-25px, 25px, 0) rotate(-10deg); }
+  }
+  @keyframes float-box-c {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50%      { transform: translate3d(15px, -15px, 0) scale(1.1); }
+  }
+  .float-box {
+    position: absolute;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(127,238,100,0.10), rgba(61,203,160,0.04));
+    border: 1px solid rgba(127, 238, 100, 0.18);
+    box-shadow: 0 10px 40px rgba(127, 238, 100, 0.08);
+    backdrop-filter: blur(6px);
+    pointer-events: none;
+  }
+  .float-box.a { animation: float-box-a 9s ease-in-out infinite; }
+  .float-box.b { animation: float-box-b 11s ease-in-out infinite; }
+  .float-box.c { animation: float-box-c 7s ease-in-out infinite; }
 
   @media (prefers-reduced-motion: reduce) {
     .flip-in, .rotate-in-3d, .pop-3d, .swing-3d, .tilt-idle, .glow-pulse,
-    .card-surface, .flip-card {
+    .card-surface, .flip-card, .scroll-rotate, .scroll-parallax,
+    .scroll-parallax-down, .scroll-zoom, .scroll-rise, .float-box, section {
       animation: none !important;
       transition: none !important;
       transform: none !important;
