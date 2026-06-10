@@ -30,6 +30,8 @@ import {
   Store,
   X,
   Phone,
+} from "lucide-react";
+
 
 import video from "@/assets/video.mp4";
 import gif1 from "@/assets/ai1.webp";
