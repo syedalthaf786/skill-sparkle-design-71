@@ -29,7 +29,8 @@ import {
   Rocket,
   Store,
   X,
-} from "lucide-react";
+  Phone,
+
 import video from "@/assets/video.mp4";
 import gif1 from "@/assets/ai1.webp";
 import svcAnnotation from "@/assets/svc-annotation.jpg";
