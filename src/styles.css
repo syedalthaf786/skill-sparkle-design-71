@@ -247,8 +247,8 @@
     75%      { transform: perspective(900px) rotateX(-3deg) rotateY(6deg); }
   }
   @keyframes glow-pulse {
-    0%, 100% { box-shadow: 0 0 0 1px rgba(127,238,100,0.15), 0 10px 40px rgba(127,238,100,0.10); }
-    50%      { box-shadow: 0 0 0 1px rgba(127,238,100,0.45), 0 20px 60px rgba(127,238,100,0.30); }
+    0%, 100% { box-shadow: 0 0 0 1px rgba(242,107,26,0.15), 0 10px 40px rgba(242,107,26,0.10); }
+    50%      { box-shadow: 0 0 0 1px rgba(242,107,26,0.45), 0 20px 60px rgba(242,107,26,0.30); }
   }
   @keyframes tilt-idle {
     0%, 100% { transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0); }
@@ -415,7 +415,7 @@
   .float-box {
     position: absolute;
     border-radius: 14px;
-    background: linear-gradient(135deg, rgba(127,238,100,0.10), rgba(61,203,160,0.04));
+    background: linear-gradient(135deg, rgba(242,107,26,0.10), rgba(255,138,61,0.04));
     border: 1px solid rgba(127, 238, 100, 0.18);
     box-shadow: 0 10px 40px rgba(127, 238, 100, 0.08);
     backdrop-filter: blur(6px);
