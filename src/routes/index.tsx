@@ -29,7 +29,10 @@ import {
   Rocket,
   Store,
   X,
+  Phone,
 } from "lucide-react";
+
+
 import video from "@/assets/video.mp4";
 import gif1 from "@/assets/ai1.webp";
 import svcAnnotation from "@/assets/svc-annotation.jpg";
@@ -313,76 +316,131 @@ export default function Index() {
              </div>
            </div>
          )}
-        {/* HERO */}
-        <section className="relative overflow-hidden text-slate-900">
-          <RoboSnowBackground className="-z-10" />
-          {/* Floating decorative boxes */}
-          <div className="pointer-events-none absolute inset-0 -z-10">
-            <div className="float-box a" style={{ width: 90, height: 90, top: "12%", left: "6%" }} />
-            <div className="float-box b" style={{ width: 60, height: 60, top: "60%", left: "12%" }} />
-            <div className="float-box c" style={{ width: 120, height: 120, top: "20%", right: "8%" }} />
-            <div className="float-box a" style={{ width: 50, height: 50, bottom: "10%", right: "20%" }} />
-          </div>
-          <div className="container-x grid items-center gap-12 py-20 lg:grid-cols-2 lg:py-28 scroll-parallax">
+        {/* HERO — QualityThought-style deep navy */}
+        <section
+          className="relative overflow-hidden text-white"
+          style={{ background: "var(--gradient-navy)" }}
+        >
+          {/* subtle orange glow */}
+          <div
+            className="pointer-events-none absolute inset-0 -z-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 60% 50% at 80% 20%, rgba(242,107,26,0.22), transparent 60%), radial-gradient(ellipse 50% 40% at 10% 80%, rgba(242,107,26,0.12), transparent 70%)",
+            }}
+          />
+          {/* decorative grid lines */}
+          <div
+            className="pointer-events-none absolute inset-0 -z-0 opacity-[0.08]"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
+              backgroundSize: "60px 60px",
+            }}
+          />
 
+          <div className="container-x relative grid items-center gap-12 py-20 lg:grid-cols-2 lg:py-28">
             <div>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span className="eyebrow cursor-help">
-                    <Sparkles size={12} className="animate-bounce" /> Hello! Welcome to Svms Technologies
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent side="bottom">
-                  Welcome to Svms Technologies — your partner for data, AI, and digital innovation.
-                </TooltipContent>
-              </Tooltip>
-              <h1 className="mt-5 text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl">
+              <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/90 ring-1 ring-white/20">
+                <Sparkles size={12} className="text-[var(--primary-glow)]" /> Trusted by 50+ Brands
+                Since 2018
+              </span>
+              <h1 className="mt-5 text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl text-white">
                 Empowering Businesses with{" "}
-                <span className="brand-text">Data & Digital Innovation</span>
+                <span
+                  style={{
+                    background: "var(--gradient-brand)",
+                    WebkitBackgroundClip: "text",
+                    backgroundClip: "text",
+                    color: "transparent",
+                  }}
+                >
+                  Data & Digital Innovation
+                </span>
               </h1>
-              <p className="mt-6 max-w-xl text-lg text-muted-foreground">
-                We deliver high-quality AI data annotation services, modern web development, and
-                scalable IT solutions that help businesses grow faster in the digital era.
+              <p className="mt-6 max-w-xl text-lg text-white/75">
+                100+ Industry-Focused Solutions • 50+ Success Stories • 6+ Years of Excellence in
+                AI data annotation, modern web development, and scalable IT.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Link to="/contact" className="btn-primary">
-                  Get Started <ArrowRight size={16} />
-                </Link>
-                <Link to="/services" className="btn-outline">
-                  Explore Services
+                <a href="tel:+918328210998" className="btn-primary">
+                  <Phone size={16} /> Talk To Expert
+                </a>
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center justify-center gap-2 rounded-md border-2 border-white/30 bg-white/5 px-6 py-3 text-sm font-semibold text-white backdrop-blur transition hover:bg-white hover:text-[var(--accent)]"
+                >
+                  Get Free Demo <ArrowRight size={16} />
                 </Link>
               </div>
-              <p className="mt-6 text-xs uppercase tracking-[0.18em] text-muted-foreground">
-                Trusted by startups, enterprises & AI-driven businesses
-              </p>
+              <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/80">
+                {["Top Tech Partner", "1000+ Deliveries", "Expert Engineers", "24/7 Support"].map(
+                  (t) => (
+                    <span key={t} className="inline-flex items-center gap-2">
+                      <CheckCircle2 size={14} className="text-[var(--primary-glow)]" />
+                      {t}
+                    </span>
+                  ),
+                )}
+              </div>
             </div>
-            <div className="relative animate-floaty scroll-rotate">
+
+            <div className="relative animate-floaty">
               <div
                 className="absolute -inset-6 -z-10 rounded-[2rem]"
-                style={{ background: "var(--gradient-brand)", opacity: 0.08, filter: "blur(40px)" }}
+                style={{ background: "var(--gradient-brand)", opacity: 0.18, filter: "blur(50px)" }}
               />
-              <TooltipCard tooltip="A modern showcase of our team and digital capabilities.">
-                <div className="overflow-hidden rounded-3xl border border-border bg_card shadow-[var(--shadow-elevated)]">
-                  <video src={video} autoPlay loop muted className="w-full h-full object-cover" />
-                </div>
-              </TooltipCard>
-              <div className="absolute -bottom-6 -left-6 hidden rounded-2xl border border-border bg_card p-4 shadow-[var(--shadow-soft)] sm:block">
+              <div className="overflow-hidden rounded-2xl border border-white/15 bg-white/5 shadow-[0_30px_80px_rgba(0,0,0,0.45)] backdrop-blur">
+                <video
+                  src={video}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="absolute -bottom-6 -left-6 hidden rounded-xl border border-white/15 bg-white p-4 shadow-2xl sm:block">
                 <div className="flex items-center gap-3">
                   <div
-                    className="grid h-10 w-10 place-items-center rounded-xl"
+                    className="grid h-10 w-10 place-items-center rounded-lg"
                     style={{ background: "var(--gradient-brand)" }}
                   >
-                    <CheckCircle2 size={20} className="text-primary-foreground" />
+                    <CheckCircle2 size={20} className="text-white" />
                   </div>
                   <div>
-                    <div className="text_sm font-semibold">99% Accuracy</div>
+                    <div className="text-sm font-bold text-[var(--accent)]">99% Accuracy</div>
                     <div className="text-xs text-muted-foreground">Across 100+ projects</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
+          {/* Stats strip — QT style */}
+          <div className="relative">
+            <div className="container-x pb-20 lg:pb-24">
+              <div className="grid grid-cols-2 gap-4 rounded-2xl border border-white/15 bg-white/8 p-6 backdrop-blur md:grid-cols-4 md:p-8">
+                {[
+                  { n: "6+", l: "Years of Excellence" },
+                  { n: "100+", l: "Solutions Delivered" },
+                  { n: "50+", l: "Happy Clients" },
+                  { n: "1000+", l: "Annual Deliveries" },
+                ].map((s) => (
+                  <div key={s.l} className="text-center">
+                    <div className="font-display text-3xl md:text-4xl font-bold text-[var(--primary-glow)]">
+                      {s.n}
+                    </div>
+                    <div className="mt-1 text-xs md:text-sm font-medium uppercase tracking-wider text-white/80">
+                      {s.l}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </section>
+
 
         {/* ABOUT */}
         <section className="border-y border-border bg_surface">

@@ -41,39 +41,41 @@
 }
 
 :root {
-  --radius: 0.875rem;
+  --radius: 0.625rem;
 
-  /* ===== Light theme: white background, black text ===== */
+  /* ===== QualityThought-inspired light theme: orange + deep navy ===== */
   --background: #FFFFFF;
-  --foreground: #000000;
+  --foreground: #0A1F4D;
 
-  --surface: #FFFFFF;
-  --surface-foreground: #000000;
+  --surface: #F7F9FC;
+  --surface-foreground: #0A1F4D;
 
   --card: #FFFFFF;
-  --card-foreground: #000000;
+  --card-foreground: #0A1F4D;
   --popover: #FFFFFF;
-  --popover-foreground: #000000;
+  --popover-foreground: #0A1F4D;
 
-  --primary: #16A34A;
+  /* Orange primary */
+  --primary: #F26B1A;
   --primary-foreground: #FFFFFF;
-  --primary-glow: #22C55E;
+  --primary-glow: #FF8A3D;
 
-  --accent: #16A34A;
+  /* Deep navy as accent / secondary brand */
+  --accent: #0A1F4D;
   --accent-foreground: #FFFFFF;
 
-  --secondary: #F4F4F5;
-  --secondary-foreground: #000000;
+  --secondary: #F1F4FA;
+  --secondary-foreground: #0A1F4D;
 
-  --muted: #F4F4F5;
-  --muted-foreground: #4B5563;
+  --muted: #F1F4FA;
+  --muted-foreground: #4B5A7A;
 
   --destructive: oklch(0.62 0.23 27);
   --destructive-foreground: #FFFFFF;
 
-  --border: rgba(0, 0, 0, 0.10);
-  --input: rgba(0, 0, 0, 0.14);
-  --ring: #16A34A;
+  --border: rgba(10, 31, 77, 0.10);
+  --input: rgba(10, 31, 77, 0.14);
+  --ring: #F26B1A;
 
   --clay-1: #FFFFFF;
   --clay-2: #FFFFFF;
@@ -82,21 +84,23 @@
   --clay-5: #FFFFFF;
   --clay-6: #FFFFFF;
 
-  --gradient-brand: linear-gradient(135deg, #16A34A 0%, #22C55E 100%);
+  --gradient-brand: linear-gradient(135deg, #F26B1A 0%, #FF8A3D 100%);
+  --gradient-navy: linear-gradient(135deg, #06133A 0%, #0A1F4D 50%, #112C6B 100%);
   --gradient-hero: radial-gradient(
     ellipse 70% 50% at 50% 0%,
-    rgba(22, 163, 74, 0.10),
+    rgba(242, 107, 26, 0.10),
     transparent 70%
   );
-  --gradient-soft: linear-gradient(180deg, #FFFFFF 0%, #F9FAFB 100%);
+  --gradient-soft: linear-gradient(180deg, #FFFFFF 0%, #F7F9FC 100%);
 
-  --shadow-clay: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 20px 60px rgba(0, 0, 0, 0.08);
+  --shadow-clay: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 20px 60px rgba(10, 31, 77, 0.08);
   --shadow-clay-inset: inset 0 1px 0 rgba(255, 255, 255, 0.6);
   --shadow-clay-pressed: inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
-  --shadow-elevated: 0 25px 60px rgba(0, 0, 0, 0.12);
-  --shadow-glow: 0 0 0 1px rgba(22, 163, 74, 0.25), 0 10px 40px rgba(22, 163, 74, 0.18);
+  --shadow-soft: 0 10px 30px rgba(10, 31, 77, 0.08);
+  --shadow-elevated: 0 25px 60px rgba(10, 31, 77, 0.14);
+  --shadow-glow: 0 0 0 1px rgba(242, 107, 26, 0.25), 0 10px 40px rgba(242, 107, 26, 0.20);
 }
+
 
 .dark {
   --background: #FFFFFF;
@@ -130,49 +134,50 @@
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200;
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-6 py-3 text-sm font-semibold transition-all duration-200;
     background: var(--primary);
     color: var(--primary-foreground);
-    box-shadow: 0 0 0 1px rgba(127, 238, 100, 0.4), 0 8px 24px rgba(127, 238, 100, 0.18);
+    box-shadow: 0 6px 20px rgba(242, 107, 26, 0.28);
   }
   .btn-primary:hover {
     background: var(--primary-glow);
     transform: translateY(-1px);
-    box-shadow: 0 0 0 1px rgba(127, 238, 100, 0.6), 0 12px 32px rgba(127, 238, 100, 0.28);
+    box-shadow: 0 10px 28px rgba(242, 107, 26, 0.36);
   }
   .btn-primary:active { transform: translateY(0); }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200;
-    background: rgba(255, 255, 255, 0.04);
-    color: var(--foreground);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-6 py-3 text-sm font-semibold transition-all duration-200;
+    background: transparent;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
   }
   .btn-outline:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.22);
+    background: var(--accent);
+    color: var(--accent-foreground);
   }
 
   .eyebrow {
     @apply inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em];
-    background: rgba(127, 238, 100, 0.08);
+    background: rgba(242, 107, 26, 0.10);
     color: var(--primary);
-    border: 1px solid rgba(127, 238, 100, 0.22);
+    border: 1px solid rgba(242, 107, 26, 0.25);
   }
 
   .card-surface {
-    @apply relative rounded-2xl p-7 transition-all duration-300;
+    @apply relative rounded-xl p-7 transition-all duration-300;
     background: #FFFFFF;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 10px 30px rgba(0, 0, 0, 0.06);
-    color: #000000;
+    border: 1px solid rgba(10, 31, 77, 0.08);
+    box-shadow: 0 6px 24px rgba(10, 31, 77, 0.06);
+    color: var(--foreground);
   }
   .card-surface::before { content: none; }
   .card-surface:hover {
-    transform: translateY(-3px);
-    border-color: rgba(22, 163, 74, 0.35);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 18px 40px rgba(0, 0, 0, 0.10), 0 0 0 1px rgba(22, 163, 74, 0.18);
+    transform: translateY(-4px);
+    border-color: rgba(242, 107, 26, 0.45);
+    box-shadow: 0 18px 40px rgba(10, 31, 77, 0.10), 0 0 0 1px rgba(242, 107, 26, 0.22);
   }
+
 
   /* keep claymorphism API but flatten to white surfaces */
   .clay-rotate > * .card-surface,
@@ -192,9 +197,9 @@
   }
 
   .clay-bubble {
-    background: rgba(127, 238, 100, 0.08);
+    background: rgba(242,107,26, 0.08);
     border-radius: 0.85rem;
-    border: 1px solid rgba(127, 238, 100, 0.22);
+    border: 1px solid rgba(242,107,26, 0.22);
     color: var(--primary);
   }
 
@@ -242,8 +247,8 @@
     75%      { transform: perspective(900px) rotateX(-3deg) rotateY(6deg); }
   }
   @keyframes glow-pulse {
-    0%, 100% { box-shadow: 0 0 0 1px rgba(127,238,100,0.15), 0 10px 40px rgba(127,238,100,0.10); }
-    50%      { box-shadow: 0 0 0 1px rgba(127,238,100,0.45), 0 20px 60px rgba(127,238,100,0.30); }
+    0%, 100% { box-shadow: 0 0 0 1px rgba(242,107,26,0.15), 0 10px 40px rgba(242,107,26,0.10); }
+    50%      { box-shadow: 0 0 0 1px rgba(242,107,26,0.45), 0 20px 60px rgba(242,107,26,0.30); }
   }
   @keyframes tilt-idle {
     0%, 100% { transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0); }
@@ -310,8 +315,8 @@
     display: grid; place-items: center;
     width: 38px; height: 38px;
     border-radius: 10px;
-    background: rgba(127, 238, 100, 0.18);
-    border: 1px solid rgba(127, 238, 100, 0.35);
+    background: rgba(242,107,26, 0.18);
+    border: 1px solid rgba(242,107,26, 0.35);
     backdrop-filter: blur(6px);
     color: var(--primary);
   }
@@ -357,7 +362,7 @@
     transition: opacity 0.35s ease;
     background: radial-gradient(
       360px circle at calc(var(--gx, 50) * 1%) calc(var(--gy, 50) * 1%),
-      rgba(127, 238, 100, 0.18),
+      rgba(242,107,26, 0.18),
       transparent 60%
     );
   }
@@ -374,23 +379,18 @@
     transition: opacity 0.4s ease;
     background: radial-gradient(
       500px circle at calc(var(--mx, 50) * 1vw) calc(var(--my, 50) * 1vh),
-      rgba(127, 238, 100, 0.10),
+      rgba(242,107,26, 0.10),
       transparent 40%
     );
     mix-blend-mode: screen;
   }
   .card-surface:hover::before { opacity: 1; }
 
-  /* Section-level perspective so children rotate naturally */
+  /* Section perspective for child 3D effects, no auto-tilt */
   section {
     perspective: 1400px;
-    /* Scroll-synced subtle 3D tilt: --sp goes -1..1, set by main.tsx */
-    transform: perspective(1400px)
-               rotateX(calc(var(--sp, 0) * -3deg))
-               translate3d(0, calc(var(--sp, 0) * -12px), 0);
-    transition: transform 0.2s linear;
-    transform-style: preserve-3d;
   }
+
 
   /* Scroll-driven utility classes — apply on any element inside a section */
   .scroll-rotate    { transform: rotateY(calc(var(--sp, 0) * 18deg)) rotateX(calc(var(--sp, 0) * -6deg)); transform-style: preserve-3d; transition: transform 0.15s linear; }
@@ -415,9 +415,9 @@
   .float-box {
     position: absolute;
     border-radius: 14px;
-    background: linear-gradient(135deg, rgba(127,238,100,0.10), rgba(61,203,160,0.04));
-    border: 1px solid rgba(127, 238, 100, 0.18);
-    box-shadow: 0 10px 40px rgba(127, 238, 100, 0.08);
+    background: linear-gradient(135deg, rgba(242,107,26,0.10), rgba(255,138,61,0.04));
+    border: 1px solid rgba(242,107,26, 0.18);
+    box-shadow: 0 10px 40px rgba(242,107,26, 0.08);
     backdrop-filter: blur(6px);
     pointer-events: none;
   }
