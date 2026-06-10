@@ -386,16 +386,11 @@
   }
   .card-surface:hover::before { opacity: 1; }
 
-  /* Section-level perspective so children rotate naturally */
+  /* Section perspective for child 3D effects, no auto-tilt */
   section {
     perspective: 1400px;
-    /* Scroll-synced subtle 3D tilt: --sp goes -1..1, set by main.tsx */
-    transform: perspective(1400px)
-               rotateX(calc(var(--sp, 0) * -3deg))
-               translate3d(0, calc(var(--sp, 0) * -12px), 0);
-    transition: transform 0.2s linear;
-    transform-style: preserve-3d;
   }
+
 
   /* Scroll-driven utility classes — apply on any element inside a section */
   .scroll-rotate    { transform: rotateY(calc(var(--sp, 0) * 18deg)) rotateX(calc(var(--sp, 0) * -6deg)); transform-style: preserve-3d; transition: transform 0.15s linear; }
