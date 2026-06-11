@@ -33,7 +33,6 @@ import {
 } from "lucide-react";
 
 
-import video from "@/assets/video.mp4";
 import gif1 from "@/assets/ai1.webp";
 import svcAnnotation from "@/assets/svc-annotation.jpg";
 import svcWeb from "@/assets/svc-web.jpg";
