@@ -1,15 +1,18 @@
 import { Link } from "react-router-dom";
 import { Linkedin, Instagram, Facebook, Youtube, Mail, Phone, MapPin } from "lucide-react";
-import logo from "../../assets/logo (2).png";
-import logo1 from "../../assets/logo1.png";
 
 export function Footer() {
   return (
     <footer className="bg-[var(--accent)] text-white/85">
       <div className="container-x grid gap-10 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div className="lg:col-span-1">
-          <div className="rounded-lg bg-white p-3 inline-block">
-            <img src={logo} alt="SVMS Technologies" className="h-16 w-auto" />
+          <div className="flex items-baseline gap-1.5">
+            <span className="font-display text-2xl font-extrabold tracking-tight text-white">
+              Xenvonta
+            </span>
+            <span className="font-display text-2xl font-extrabold tracking-tight text-[var(--primary)]">
+              Solutions
+            </span>
           </div>
           <p className="mt-5 text-sm text-white/70 leading-relaxed">
             Transforming data into intelligent solutions. Your trusted technology partner for AI,
@@ -79,10 +82,10 @@ export function Footer() {
             <li className="flex items-start gap-3">
               <Mail size={16} className="mt-0.5 text-[var(--primary)] shrink-0" />
               <a
-                href="mailto:info@svmstechnologies.com"
+                href="mailto:info@xenvonta.com"
                 className="text-white/80 hover:text-[var(--primary-glow)] transition break-all"
               >
-                info@svmstechnologies.com
+                info@xenvonta.com
               </a>
             </li>
             <li className="flex items-start gap-3">
@@ -104,17 +107,8 @@ export function Footer() {
 
       <div className="border-t border-white/10">
         <div className="container-x flex flex-col items-center justify-between gap-3 py-5 text-xs text-white/60 md:flex-row">
-          <p>© 2026 SVMS Technologies. All Rights Reserved.</p>
-          <span className="flex items-center gap-2">
-            design & development by{" "}
-            <a
-              href="https://www.designdelivergrow.store"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img src={logo1} alt="DDG" className="h-7 w-7" />
-            </a>
-          </span>
+          <p>© 2026 Xenvonta Solutions. All Rights Reserved.</p>
+          <span className="text-white/50">Quality through excellence.</span>
         </div>
       </div>
     </footer>

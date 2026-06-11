@@ -1,7 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
 import { Menu, X, Phone, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
-import logo from "../../assets/logo (2).png";
+
 
 const nav = [
   { to: "/", label: "Home" },
@@ -50,8 +50,13 @@ export function Header() {
       {/* Main header */}
       <div className="bg-white border-b border-border shadow-[0_2px_12px_rgba(10,31,77,0.06)]">
         <div className="container-x flex h-[68px] items-center justify-between gap-3">
-          <Link to="/" className="flex items-center gap-2">
-            <img src={logo} alt="SVMS Technologies" className="h-11 w-auto" />
+          <Link to="/" className="flex items-baseline gap-1.5 leading-none">
+            <span className="font-display text-2xl font-extrabold tracking-tight text-[var(--accent)]">
+              Xenvonta
+            </span>
+            <span className="font-display text-2xl font-extrabold tracking-tight text-[var(--primary)]">
+              Solutions
+            </span>
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1">
