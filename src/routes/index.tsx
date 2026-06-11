@@ -503,8 +503,67 @@ export default function Index() {
           <ServicesGrid />
         </section>
 
+        {/* ENDORSEMENT — QT Sathyaraj style quote block */}
+        <section className="bg_surface border-y border-border py-20">
+          <div className="container-x">
+            <div className="mx-auto max-w-3xl text-center">
+              <span className="inline-flex rounded-full bg-[var(--secondary)] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--accent)]">
+                Trusted Partner
+              </span>
+              <h2 className="mt-5 text-3xl font-bold text-[var(--accent)] md:text-5xl">
+                Quality Through{" "}
+                <span style={{ background: "var(--gradient-brand)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>
+                  Excellence
+                </span>
+              </h2>
+              <p className="mt-4 text-muted-foreground">
+                India's most trusted technology partner for AI, data and digital transformation —
+                with unmatched accuracy, delivery and support.
+              </p>
+              <div className="mt-10 mx-auto max-w-2xl rounded-2xl border border-border bg_card p-8 shadow-[var(--shadow-soft)]">
+                <Quote size={28} className="mx-auto text-[var(--primary)]" />
+                <p className="mt-4 text-lg italic text-[var(--accent)]">
+                  "Xenvonta turned our raw data into a real growth engine. Their delivery quality
+                  and consistency is simply best in class."
+                </p>
+                <div className="mt-5 text-sm font-semibold text-[var(--accent)]">
+                  — Head of AI, Fortune 500 Enterprise
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-        {/* WHY US */}
+        {/* CLIENT LOGOS — QT style marquee */}
+        <section className="py-16">
+          <div className="container-x">
+            <div className="text-center">
+              <span className="eyebrow">Our Clients & Partners</span>
+              <h2 className="mt-3 text-2xl font-bold text-[var(--accent)] md:text-3xl">
+                Trusted by leading brands across industries
+              </h2>
+            </div>
+            <div className="marquee-mask mt-10 overflow-hidden">
+              <div className="marquee-track gap-12 pr-12">
+                {[...Array(2)].flatMap((_, k) =>
+                  [
+                    "Microsoft", "Amazon", "Google", "Oracle", "Adobe",
+                    "Infosys", "TCS", "Wipro", "Capgemini", "Accenture",
+                  ].map((name) => (
+                    <div
+                      key={`${k}-${name}`}
+                      className="grid h-16 w-44 shrink-0 place-items-center rounded-xl border border-border bg_card text-lg font-bold tracking-tight text-[var(--accent)]/70 shadow-[var(--shadow-soft)] transition hover:text-[var(--primary)]"
+                    >
+                      {name}
+                    </div>
+                  )),
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+
+
         <section className="bg_surface py-24">
           <div className="container-x">
             <div className="mx-auto max-w-2xl text-center">
