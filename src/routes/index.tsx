@@ -33,7 +33,6 @@ import {
 } from "lucide-react";
 
 
-import video from "@/assets/video.mp4";
 import gif1 from "@/assets/ai1.webp";
 import svcAnnotation from "@/assets/svc-annotation.jpg";
 import svcWeb from "@/assets/svc-web.jpg";
@@ -391,13 +390,11 @@ export default function Index() {
                 style={{ background: "var(--gradient-brand)", opacity: 0.18, filter: "blur(50px)" }}
               />
               <div className="overflow-hidden rounded-2xl border border-white/15 bg-white/5 shadow-[0_30px_80px_rgba(0,0,0,0.45)] backdrop-blur">
-                <video
-                  src={video}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
+                <img
+                  src={heroTeam}
+                  alt="Xenvonta team collaborating"
                   className="w-full h-full object-cover"
+                  loading="eager"
                 />
               </div>
               <div className="absolute -bottom-6 -left-6 hidden rounded-xl border border-white/15 bg-white p-4 shadow-2xl sm:block">
@@ -590,36 +587,6 @@ export default function Index() {
           </div>
         </section>
 
-        {/* STATS */}
-        <section className="container-x py-20">
-          <div className="text-center mb-10">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <span className="eyebrow cursor-help">Our Impact</span>
-              </TooltipTrigger>
-              <TooltipContent side="top">
-                Metrics that show our quality, delivery, and client support performance.
-              </TooltipContent>
-            </Tooltip>
-          </div>
-          <div
-            className="overflow-hidden rounded-3xl border border-border p-10 md:p-14"
-            style={{ background: "var(--gradient-brand)" }}
-          >
-            <div className="grid gap-8 text-primary-foreground md:grid-cols-4">
-              {stats.map((s, i) => (
-                <Reveal key={s.l} delay={i * 100} className="w-full">
-                  <TooltipCard tooltip={s.l}>
-                    <div>
-                      <CountUp value={s.n} />
-                      <div className="mt-2 text-sm opacity-80">{s.l}</div>
-                    </div>
-                  </TooltipCard>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* INDUSTRIES */}
         <section className="container-x py-20">
